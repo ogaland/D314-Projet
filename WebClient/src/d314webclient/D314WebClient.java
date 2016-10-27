@@ -6,7 +6,11 @@
 package d314webclient;
 
 /**
+<<<<<<< HEAD
  *
+=======
+ *test
+>>>>>>> e3c3c7a2e239d6499dd101368e22201a2b4a4407
  * @author olivier
  */
 public class D314WebClient {
@@ -17,5 +21,9 @@ public class D314WebClient {
     public static void main(String[] args) {
         // TODO code application logic here
     }
+<<<<<<< HEAD
  blabla   
+=======
+    
+>>>>>>> e3c3c7a2e239d6499dd101368e22201a2b4a4407
 }
