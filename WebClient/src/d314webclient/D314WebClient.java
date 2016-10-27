@@ -6,7 +6,7 @@
 package d314webclient;
 
 /**
- *
+ *test
  * @author olivier
  */
 public class D314WebClient {
