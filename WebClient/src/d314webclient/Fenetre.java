@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 public class Fenetre extends JFrame {
   public Fenetre(){
     this.setTitle("Fenêtre de contrôle");
+    this.setSize(1000, 500);
     this.setAlwaysOnTop(true);
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);             
