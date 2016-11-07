@@ -5,22 +5,21 @@
  */
 package com.miage.sensors;
 
-import com.miage.device.ElectricalPlug;
+import com.miage.device.ElectricMeter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Capteur de prise électrique
+ * Capteur de compteur electrique
  * @author ko
  */
-public class ElectricalPlugSensor extends Sensor {
-    private ElectricalPlug electricalPlug;
+public class ElectricMeterSensor extends Sensor{
+    private ElectricMeter electricMeter;
     
     /**
      * Constructeur
@@ -28,10 +27,11 @@ public class ElectricalPlugSensor extends Sensor {
      * @param type
      * @param device 
      */
-    public ElectricalPlugSensor(String name, String type, ElectricalPlug device) {
-        super(name,"Prise");
-        this.electricalPlug = device;
-        createDB();       
+    public ElectricMeterSensor(String name, String type, ElectricMeter device) {
+        super(name, "Compteur");
+        this.electricMeter = device;
+        createDB(); 
+        
     }
     
     //getters and setters
@@ -39,23 +39,23 @@ public class ElectricalPlugSensor extends Sensor {
      * Met à jour la prise électrique du capteur
      * @param device 
      */
-    public void setDevice(ElectricalPlug device){
-        this.electricalPlug = device;
+    public void setDevice(ElectricMeter device){
+        this.electricMeter = device;
     }
     
     /**
      * Retourne la prise électrique du capteur
-     * @return ElectricalPlug 
+     * @return ElectricMeter 
      */
-    public ElectricalPlug getDevice(){
-        return this.electricalPlug;
+    public ElectricMeter getDevice(){
+        return this.electricMeter;
     }
     
     /**
-     * Enregistre le comportement de l'appareil (device) : prise
+     * Enregistre le comportement de l'appareil (device) : compteur
      */
     @Override
-    public void recordBehavior() {    
+    public void recordBehavior() {
         try {
             //Connection à la base de donnée du capteur
             Connection connection;
@@ -65,15 +65,9 @@ public class ElectricalPlugSensor extends Sensor {
             Statement statement = connection.createStatement();
             //Récupération de la consommation courante de l'appareil
             int consumption;
-            if(this.getDevice().getState() == "on"){
-                consumption = this.getDevice().getCurrentConsumption();
-            }
-            else{
-                consumption = 0;
-            }        
+            consumption = this.getDevice().getCurrentConsumption();        
             //Enregistrement de la consommation dans la base de donnée du capteur.
-            String requete = "INSERT INTO consumption_"+this.getId()+" VALUES(null,'"+this.getDevice().getState()
-                    +"',"+consumption+")";
+            String requete = "INSERT INTO consumption_"+this.getId()+" VALUES(null,"+consumption+")";
             statement.execute(requete);
             statement.close();
             connection.close();
@@ -81,12 +75,12 @@ public class ElectricalPlugSensor extends Sensor {
             Logger.getLogger(ElectricalPlugSensor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     /**
      * Créer une table associée au capteur dans la base de donnée
      */
     @Override
-    public final void createDB() {
+    public void createDB() {
         Connection connection;
         try {
             //Création de la base de donnée du capteur
@@ -97,7 +91,6 @@ public class ElectricalPlugSensor extends Sensor {
             //Création de la table des enregistrements du capteur
             String requete = "CREATE TABLE IF NOT EXISTS consumption_"+ this.getId() + "("
                     + " id_reg INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + " state TEXT NOT NULL,"
                     + " current_power INTEGER)";
             statement.execute(requete);
             statement.close();       
@@ -114,7 +107,7 @@ public class ElectricalPlugSensor extends Sensor {
      */
     @Override
     public String[] getInformations() {
-        String[] infos = new String[2];
+        String[] infos = new String[1];
         try {
             Connection connection;
             //Connection à la base de donnée du capteur
@@ -123,7 +116,7 @@ public class ElectricalPlugSensor extends Sensor {
             Statement statement = connection.createStatement();
             connection.setAutoCommit(true);
             //Selection du dernier enregistrement
-            String requete = "SELECT MAX(id_reg) as last_reg, state, current_power FROM consumption_"+ this.getId();
+            String requete = "SELECT MAX(id_reg) as last_reg, current_power FROM consumption_"+ this.getId();
             ResultSet resultat = statement.executeQuery(requete);       
             while(resultat.next()){
                 for(int i = 0; i<infos.length ; i++){
@@ -137,18 +130,7 @@ public class ElectricalPlugSensor extends Sensor {
         }             
         return infos;
     }
-    
-    /**
-     * Change l'état de l'appareil : on ou off selon l'état courant
-     */
-    @Override
-    public void switchPower() {
-        if(this.electricalPlug.getState()=="on"){
-            this.electricalPlug.setState("off");
-        }else{
-            this.electricalPlug.setState("on");
-        }      
-    }
+
     
      /**
      * Retourne les informations du capteur.
@@ -158,13 +140,16 @@ public class ElectricalPlugSensor extends Sensor {
     public String toString(){
         String s; 
         s = "Capteur n° " + this.getId() 
-                + "\n - nom : " + this.getName()
-                + "\n - type : " + this.getType()
-                + "\n - State : " + this.getDevice().getState()
-                + "\n - consommation : " + this.getDevice().getCurrentConsumption()  +" kW";     
+                + " - nom : " + this.getName()
+                + " - type : " + this.getType()
+                + " - consommation : " + this.getDevice().getCurrentConsumption()  +" kW";     
         return s;
     }
-    
+
+    @Override
+    public void switchPower() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }

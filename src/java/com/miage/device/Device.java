@@ -12,7 +12,7 @@ public class Device {
     private static int idDevices = 0;
     private int id;
     private int currentConsumption;//Consommation courante
-    private String state; // on - off
+    //private String state; // on - off
     
     /**
      * Constructeur
@@ -20,7 +20,7 @@ public class Device {
      */
     public Device(){
         this.id = ++idDevices;
-        this.state = "on";
+       // this.state = "on";
         this.currentConsumption = rand();
     }
     
@@ -55,22 +55,6 @@ public class Device {
      */
     public void setCurrentConsumption(int currentConsumption){
         this.currentConsumption = currentConsumption;  
-    }
-    
-    /**
-     * Retourne l'état de l'appareil on ou off.
-     * @return String
-     */
-    public String getState(){
-        return this.state;
-    }
-    
-    /**
-     * Met à jour l'état de l'appareil on ou off
-     * @param state
-     */
-    public void setState(String state){
-        this.state = state;
     }
     
     public final int rand(){
