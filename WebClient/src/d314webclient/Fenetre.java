@@ -7,7 +7,7 @@ package d314webclient;
 
 /**
  *
- * @author KLO
+ * @author K107
  */
 import javax.swing.JFrame;
  
