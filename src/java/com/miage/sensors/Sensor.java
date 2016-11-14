@@ -1,5 +1,7 @@
 package com.miage.sensors;
 
+import java.sql.ResultSet;
+
 /**
  * Classe abstraite capteur
  * @author ko

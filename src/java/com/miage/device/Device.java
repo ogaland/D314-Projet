@@ -70,4 +70,5 @@ public class Device {
     public void simulateDevice(){
         rand();
     }
+
 }

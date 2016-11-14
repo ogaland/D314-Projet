@@ -19,6 +19,7 @@ public class LightBulb extends Device {
      */
     public LightBulb(){
         super();
+        this.state = "on";
         this.color = "blanc";
         this.brightness = 2;
     }
