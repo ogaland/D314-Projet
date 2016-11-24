@@ -38,10 +38,10 @@ public class Controller {
     public Controller(){
         try{
             //ajout des capteurs à la liste des sensor
-            addSensor("Prise salon","prise");
-            addSensor("Compteur maison","compteur");
-            addSensor("Ampoule","ampoule");
-            addSensor("Capteur temperature","temperature");
+            addSensor("Prise salon","Prise");
+            addSensor("Compteur maison","Compteur");
+            addSensor("Ampoule","Ampoule");
+            addSensor("Capteur temperature","Temperature");
             
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -63,6 +63,8 @@ public class Controller {
         return tmp;
     }; 
     
+    
+    
     public String[] getInfoSensor(int id) throws JsonProcessingException, Exception{
         Sensor s = getSensor(id);
         return s.getInformations();
@@ -73,6 +75,30 @@ public class Controller {
         Sensor s = getSensor(id);
         s.switchPower();
         return s.getDevice().getState();
+    };
+    
+    public String changeColor(int id, String color) throws Exception{
+        Sensor s = getSensor(id);
+        s.getType();
+        if("Ampoule".equals(s.getType())){
+            LightBulb lb = (LightBulb) s.getDevice();
+            lb.setColor(color);
+        }else{
+            throw new Exception("Le device n'est pas une ampoule");
+        }
+        return color;
+    };
+    
+    public String changeTemperature(int id, int temp) throws Exception{
+        Sensor s = getSensor(id);
+        s.getType();
+        if("Ampoule".equals(s.getType())){
+            TemperatureDevice td = (TemperatureDevice) s.getDevice();
+            td.setTemperature(temp);
+        }else{
+            throw new Exception("Le device n'est pas une ampoule");
+        }
+        return String.valueOf(temp);
     };
     
     public String changeName(int id,String name) throws Exception{
@@ -86,21 +112,21 @@ public class Controller {
             Device device;
             /* ajoute un sensor avec pour name nom en fonction du type*/
             switch(type){
-                case "prise" :
+                case "Prise" :
                     device = new ElectricalPlug();
                     sensors.add(currentNbSensor,new ElectricalPlugSensor(nom, (ElectricalPlug)device));
                 break;
-                case "compteur":
+                case "Compteur":
                     device = new ElectricMeter();
                     sensors.add(currentNbSensor,new ElectricMeterSensor(nom, (ElectricMeter)device));
                 break;
 
-                case "ampoule":
+                case "Ampoule":
                     device = new LightBulb();
                     sensors.add(currentNbSensor,new LightBulbSensor(nom, (LightBulb)device));
                 break;
 
-                case "temperature":
+                case "Temperature":
                     device = new TemperatureDevice();
                     sensors.add(currentNbSensor,new TemperatureSensor(nom, (TemperatureDevice)device));
                 break;
@@ -125,7 +151,19 @@ public class Controller {
         }
     }
     
-   
+    public String deleteSensor(int id){
+        //construit un string json de la liste des capteur pour envoi au client web
+        List<Map<String,Object>> tmp = new ArrayList();
+        for(int i =0; i < currentNbSensor; i++){
+            if(sensors.get(i).getId() == id){
+                sensors.remove(i);
+                th.remove(i);
+                return "Le capteur à été supprimé";
+            }
+            
+        }
+        return "Impossible de supprimer le capteur";
+    }; 
     
     private Sensor getSensor(int id)throws Exception{
         

@@ -99,6 +99,70 @@ public class WebServiceDomotique {
         }
     }
     
+    @WebMethod(operationName = "changeColor")
+    public String changeColor(@WebParam(name = "id") Integer id, @WebParam(name = "color") String color) {
+        Map<String,Object> out = new HashMap();
+        try {
+            out.put("json", wsd.changeColor(id,color));
+            out.put("code", 0);
+            out.put("message", "");
+        }catch (Exception e) {
+            out.put("json", "");
+            out.put("code", -1);
+            out.put("message", e.getMessage());
+        }finally{
+            return getJsonFromObject(out);
+        }
+    }
+    
+    @WebMethod(operationName = "changeTemperature")
+    public String changeTemperature(@WebParam(name = "id") Integer id, @WebParam(name = "temperature") int temperature) {
+        Map<String,Object> out = new HashMap();
+        try {
+            out.put("json", wsd.changeTemperature(id,temperature));
+            out.put("code", 0);
+            out.put("message", "");
+        }catch (Exception e) {
+            out.put("json", "");
+            out.put("code", -1);
+            out.put("message", e.getMessage());
+        }finally{
+            return getJsonFromObject(out);
+        }
+    }
+    
+    @WebMethod(operationName = "addSensor")
+    public String addSensor(@WebParam(name = "type") String type, @WebParam(name = "name") String name) {
+        Map<String,Object> out = new HashMap();
+        try {
+            out.put("json", wsd.addSensor(name, type));
+            out.put("code", 0);
+            out.put("message", "");
+        }catch (Exception e) {
+            out.put("json", "");
+            out.put("code", -1);
+            out.put("message", e.getMessage());
+        }finally{
+            return getJsonFromObject(out);
+        }
+    }
+    
+    @WebMethod(operationName = "deleteSensor")
+    public String deleteSensor(@WebParam(name = "id") int id) {
+        Map<String,Object> out = new HashMap();
+        try {
+            out.put("json", "");
+            out.put("code", 0);
+            out.put("message", wsd.deleteSensor(id));
+        }catch (Exception e) {
+            out.put("json", "");
+            out.put("code", -1);
+            out.put("message", e.getMessage());
+        }finally{
+            return getJsonFromObject(out);
+        }
+    }
+    
     private String getJsonFromObject(Object o){
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -108,4 +172,5 @@ public class WebServiceDomotique {
             return ex.getMessage();
         }
     }
+    
 }
