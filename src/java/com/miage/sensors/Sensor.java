@@ -1,5 +1,8 @@
 package com.miage.sensors;
 
+import com.miage.device.Device;
+
+
 /**
  * Classe abstraite capteur
  * @author ko
@@ -89,4 +92,7 @@ public abstract class Sensor {
      */
     public abstract String[] getInformations();  
     
+    public abstract void run();
+    
+    public abstract Device getDevice();
 }

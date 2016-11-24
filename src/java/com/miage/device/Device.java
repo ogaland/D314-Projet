@@ -12,7 +12,7 @@ public class Device {
     private static int idDevices = 0;
     private int id;
     private int currentConsumption;//Consommation courante
-    //private String state; // on - off
+    private String state; // on - off
     
     /**
      * Constructeur
@@ -20,11 +20,19 @@ public class Device {
      */
     public Device(){
         this.id = ++idDevices;
-       // this.state = "on";
-        this.currentConsumption = rand();
+        this.state = "on";
     }
     
-    //getters and setters    
+    //getters and setters 
+    
+    public String getState(){
+        return this.state;
+    }
+    
+    public void setState(String state){
+        this.state = state;
+    }
+    
     /**
      * Retourne l'id de l'appareil
      * @return int
@@ -57,17 +65,4 @@ public class Device {
         this.currentConsumption = currentConsumption;  
     }
     
-    public final int rand(){
-        Random r = new Random();
-        return (1 + r.nextInt(1000 - 1));
-    }
-    
-    /**
-     * Simule le comportement de l'appareil.
-     * Enregistre les valeurs quelque part
-     * NON TERMINEE thread / timer ?
-     */
-    public void simulateDevice(){
-        rand();
-    }
 }

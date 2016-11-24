@@ -10,7 +10,7 @@ package com.miage.device;
  * @author ko
  */
 public class LightBulb extends Device {
-    private String state;
+
     private String color;
     private int brightness;// de 1 à 3
     
@@ -54,22 +54,6 @@ public class LightBulb extends Device {
      */
     public void setBrightness(int brightness){
         this.brightness = brightness;
-    }
-    
-    /**
-     * Retourne l'état de l'appareil on ou off.
-     * @return String
-     */
-    public String getState(){
-        return this.state;
-    }
-    
-    /**
-     * Met à jour l'état de l'appareil on ou off
-     * @param state
-     */
-    public void setState(String state){
-        this.state = state;
     }
     
 }

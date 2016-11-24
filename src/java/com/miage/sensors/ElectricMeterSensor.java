@@ -5,29 +5,26 @@
  */
 package com.miage.sensors;
 
+import com.miage.dao.DAOElectricMeterSensor;
 import com.miage.device.ElectricMeter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 /**
  * Capteur de compteur electrique
  * @author ko
  */
-public class ElectricMeterSensor extends Sensor{
+public class ElectricMeterSensor extends Sensor implements Runnable{
     private ElectricMeter electricMeter;
     
     /**
      * Constructeur
      * @param name
-     * @param type
      * @param device 
      */
-    public ElectricMeterSensor(String name, String type, ElectricMeter device) {
+    public ElectricMeterSensor(String name, ElectricMeter device) {
         super(name, "Compteur");
         this.electricMeter = device;
         createDB(); 
@@ -47,6 +44,7 @@ public class ElectricMeterSensor extends Sensor{
      * Retourne la prise électrique du capteur
      * @return ElectricMeter 
      */
+    @Override
     public ElectricMeter getDevice(){
         return this.electricMeter;
     }
@@ -55,49 +53,22 @@ public class ElectricMeterSensor extends Sensor{
      * Enregistre le comportement de l'appareil (device) : compteur
      */
     @Override
-    public void recordBehavior() {
-        try {
-            //Connection à la base de donnée du capteur
-            Connection connection;
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + this.getClass().getResource("capteur_"+this.getId()+".sqlite"));
-            connection.setAutoCommit(true);
-            Statement statement = connection.createStatement();
-            //Récupération de la consommation courante de l'appareil
-            int consumption;
-            consumption = this.getDevice().getCurrentConsumption();        
-            //Enregistrement de la consommation dans la base de donnée du capteur.
-            String requete = "INSERT INTO consumption_"+this.getId()+" VALUES(null,"+consumption+")";
-            statement.execute(requete);
-            statement.close();
-            connection.close();
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ElectricalPlugSensor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public synchronized void  recordBehavior() {
+        
+        DAOElectricMeterSensor DAOSensor = new DAOElectricMeterSensor();
+        int consumption = this.getDevice().getCurrentConsumption();
+        DAOSensor.insert(this.getId(), consumption);
+      
     }
     
     /**
      * Créer une table associée au capteur dans la base de donnée
      */
     @Override
-    public void createDB() {
-        Connection connection;
-        try {
-            //Création de la base de donnée du capteur
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + this.getClass().getResource("capteur_"+this.getId()+".sqlite"));
-            Statement statement = connection.createStatement();
-            connection.setAutoCommit(true);
-            //Création de la table des enregistrements du capteur
-            String requete = "CREATE TABLE IF NOT EXISTS consumption_"+ this.getId() + "("
-                    + " id_reg INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + " current_power INTEGER)";
-            statement.execute(requete);
-            statement.close();       
-            connection.close();
-        }catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ElectricalPlugSensor.class.getName()).log(Level.SEVERE, null, ex);
-        }       
+    public final void createDB() {      
+        DAOElectricMeterSensor DAOSensor = new DAOElectricMeterSensor();
+        DAOSensor.createNewDatabase("capteur_"+this.getId()+".db");
+        DAOSensor.createNewTable("capteur_"+this.getId());          
     }
     
     /**
@@ -106,29 +77,9 @@ public class ElectricMeterSensor extends Sensor{
      * @return String[]
      */
     @Override
-    public String[] getInformations() {
-        String[] infos = new String[1];
-        try {
-            Connection connection;
-            //Connection à la base de donnée du capteur
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + this.getClass().getResource("capteur_"+this.getId()+".sqlite"));
-            Statement statement = connection.createStatement();
-            connection.setAutoCommit(true);
-            //Selection du dernier enregistrement
-            String requete = "SELECT MAX(id_reg) as last_reg, current_power FROM consumption_"+ this.getId();
-            ResultSet resultat = statement.executeQuery(requete);       
-            while(resultat.next()){
-                for(int i = 0; i<infos.length ; i++){
-                    infos[i] = resultat.getObject(i+1).toString();
-                } 
-            }
-            statement.close();       
-            connection.close();
-        }catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ElectricalPlugSensor.class.getName()).log(Level.SEVERE, null, ex);
-        }             
-        return infos;
+    public synchronized String[]  getInformations() {
+        DAOElectricMeterSensor DAOSensor = new DAOElectricMeterSensor();                 
+        return DAOSensor.getLastRecord(this.getId());
     }
 
     
@@ -149,6 +100,18 @@ public class ElectricMeterSensor extends Sensor{
     @Override
     public void switchPower() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void run() {
+        while(this.getDevice().getState()=="on"){
+            recordBehavior();
+            try {
+                sleep(10000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ElectricMeterSensor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     

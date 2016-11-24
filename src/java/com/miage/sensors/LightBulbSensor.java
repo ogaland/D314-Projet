@@ -5,30 +5,27 @@
  */
 package com.miage.sensors;
 
-import com.miage.device.ElectricMeter;
+import com.miage.dao.DAOLightBulbSensor;
+import com.miage.device.Device;
 import com.miage.device.LightBulb;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 /**
  * Capteur d'ampoule
  * @author ko
  */
-public class LightBulbSensor extends Sensor{
+public class LightBulbSensor extends Sensor implements Runnable{
     private LightBulb lightBulb;
     
     /**
      * Constructeur
      * @param name
-     * @param type
      * @param device 
      */
-    public LightBulbSensor(String name, String type, LightBulb device) {
+    public LightBulbSensor(String name, LightBulb device) {
         super(name, "Ampoule");
         this.lightBulb = device; 
         createDB(); 
@@ -47,40 +44,22 @@ public class LightBulbSensor extends Sensor{
      * Retourne l'ampoule du capteur
      * @return LightBulb 
      */
+    
+    @Override
     public LightBulb getDevice(){
         return this.lightBulb;
-    }
-       
+    } 
     /**
      * Enregistre le comportement de l'appareil (device) : Ampoule
      */
     @Override
     public void recordBehavior() {
-        try {
-            //Connection à la base de donnée du capteur
-            Connection connection;
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + this.getClass().getResource("capteur_"+this.getId()+".sqlite"));
-            connection.setAutoCommit(true);
-            Statement statement = connection.createStatement();
-            //Récupération de la consommation courante de l'appareil
-            int consumption;
-            if(this.getDevice().getState() == "on"){
-                consumption = this.getDevice().getCurrentConsumption();
-            }
-            else{
-                consumption = 0;
-            }        
-            //Enregistrement de la consommation dans la base de donnée du capteur.
-            String requete = "INSERT INTO consumption_"+this.getId()+" VALUES(null,'"+this.getDevice().getState()
-                    + "','" + this.getDevice().getColor() + "'," + this.getDevice().getBrightness() 
-                    + "," + consumption+")";
-            statement.execute(requete);
-            statement.close();
-            connection.close();
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ElectricalPlugSensor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        DAOLightBulbSensor DAOSensor = new DAOLightBulbSensor();    
+        String state = this.getDevice().getState();
+        String color = this.getDevice().getColor();
+        int brightness = this.getDevice().getBrightness();
+        int consumption = this.getDevice().getCurrentConsumption();
+        DAOSensor.insert(this.getId(),state, color, brightness, consumption);
     }
 
     /**
@@ -88,52 +67,15 @@ public class LightBulbSensor extends Sensor{
      */
     @Override
     public final void createDB() {
-        Connection connection;
-        try {
-            //Création de la base de donnée du capteur
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + this.getClass().getResource("capteur_"+this.getId()+".sqlite"));
-            Statement statement = connection.createStatement();
-            connection.setAutoCommit(true);
-            //Création de la table des enregistrements du capteur
-            String requete = "CREATE TABLE IF NOT EXISTS consumption_"+ this.getId() + "("
-                    + " id_reg INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + " state TEXT NOT NULL,"
-                    + " color TEXT NOT NULL,"
-                    + " brightness int NOT NULL,"
-                    + " current_power INTEGER)";
-            statement.execute(requete);
-            statement.close();       
-            connection.close();
-        }catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ElectricalPlugSensor.class.getName()).log(Level.SEVERE, null, ex);
-        }       
+        DAOLightBulbSensor DAOSensor = new DAOLightBulbSensor();
+        DAOSensor.createNewDatabase("capteur_"+this.getId()+".db");
+        DAOSensor.createNewTable("capteur_"+this.getId());   
     }
 
     @Override
     public String[] getInformations() {
-        String[] infos = new String[4];
-        try {
-            Connection connection;
-            //Connection à la base de donnée du capteur
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + this.getClass().getResource("capteur_"+this.getId()+".sqlite"));
-            Statement statement = connection.createStatement();
-            connection.setAutoCommit(true);
-            //Selection du dernier enregistrement
-            String requete = "SELECT MAX(id_reg) as last_reg, state, color, brightness, current_power FROM consumption_" + this.getId();
-            ResultSet resultat = statement.executeQuery(requete);       
-            while(resultat.next()){
-                for(int i = 0; i<infos.length ; i++){
-                    infos[i] = resultat.getObject(i+1).toString();
-                } 
-            }
-            statement.close();       
-            connection.close();
-        }catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ElectricalPlugSensor.class.getName()).log(Level.SEVERE, null, ex);
-        }             
-        return infos;
+        DAOLightBulbSensor DAOSensor = new DAOLightBulbSensor();                 
+        return DAOSensor.getLastRecord(this.getId());
     }
 
     /**
@@ -163,6 +105,18 @@ public class LightBulbSensor extends Sensor{
                 + "\n - Luminosité : " + this.getDevice().getBrightness()
                 + "\n - consommation : " + this.getDevice().getCurrentConsumption()  +" kW";     
         return s;
+    }
+
+    @Override
+    public void run() {
+       while(this.getDevice().getState()=="on"){
+            recordBehavior();
+            try {
+                sleep(10000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ElectricMeterSensor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
 }

@@ -11,14 +11,12 @@ package com.miage.device;
  */
 public class TemperatureDevice extends Device{
     private int temperature;
-    private String state;
     
     /**
      * Constructeur
      */
     public TemperatureDevice(){
         super();
-        this.state = "on";
         this.temperature = 20;
     }
     
@@ -28,14 +26,6 @@ public class TemperatureDevice extends Device{
     
     public void setTemperature(int temperature){
         this.temperature = temperature;
-    }
-    
-    public String getState(){
-        return this.state;
-    }
-    
-    public void setState(String state){
-        this.state = state;
     }
     
 }
