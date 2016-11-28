@@ -87,3 +87,10 @@ td{
     text-align: right;
     border: 1px solid grey;
 }
+
+#add{
+    width: 192px;
+    height: auto;
+    margin: auto;
+    text-align: center;
+}
