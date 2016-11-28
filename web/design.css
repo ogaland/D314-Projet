@@ -8,3 +8,53 @@ and open the template in the editor.
     Author     : KLO
 */
 
+body{
+    font-family: calibri light;
+    font-size: 14px;
+}
+
+table{
+    width:90%;
+    margin: auto;
+}
+
+td{
+    text-align:center;
+    line-height:1.7em;
+    vertical-align:middle;    
+}
+
+#capteur{
+    width: 192px;
+    height: 262px;
+    margin: auto;
+    border: 1px solid grey;
+}
+
+#photo{
+    width: 96%;
+    margin: auto;
+    margin-top: 2%;
+    border: 1px solid grey;
+}
+
+#nom_capteur{
+    width: 96%;
+    margin: auto;
+    margin-top: 2%;
+    padding-top: 2%;
+    border: 1px solid grey;
+}
+
+#conso{
+    width: 96%;
+    margin: auto;
+    margin-top: 2%;
+    border: 1px solid grey;
+}
+
+span {
+  display:inline-block;
+  line-height:1.3em;
+  vertical-align:middle;
+}
