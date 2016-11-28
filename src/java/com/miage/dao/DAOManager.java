@@ -20,8 +20,9 @@ abstract class DAOManager {
         String url = "jdbc:sqlite:"+dbName;
         Connection conn = null;
         try {
+            Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return conn;
