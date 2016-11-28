@@ -19,42 +19,71 @@ table{
 }
 
 td{
-    text-align:center;
     line-height:1.7em;
     vertical-align:middle;    
 }
 
 #capteur{
     width: 192px;
-    height: 262px;
+    height: 258px;
     margin: auto;
     border: 1px solid grey;
 }
 
 #photo{
-    width: 96%;
+    text-align:center;
+    width: 184px;
     margin: auto;
-    margin-top: 2%;
+    margin-top: 4px;
+    border: 1px solid grey;
+}
+
+#cadre_milieu{
+    width: 184px;
+    margin: auto;
+    margin-top: 4px;
+    height: 25px;
     border: 1px solid grey;
 }
 
 #nom_capteur{
-    width: 96%;
+    width: 120px;
+    float: left;
+    height: auto;
+    padding-left: 4px;
+}
+
+#on-off{
+    width: 52px;
+    float: right;
+    padding-right: 4px;
+    padding-top: 3px;
+    height: auto;
+    text-align: right;
+}
+
+#cadre_bas{
+    width: 184px;
     margin: auto;
-    margin-top: 2%;
-    padding-top: 2%;
-    border: 1px solid grey;
+    margin-top: 4px;
+    height: 25px;
 }
 
 #conso{
-    width: 96%;
-    margin: auto;
-    margin-top: 2%;
+    width: 152px;
+    float: left;
+    height: auto;
+    padding-left: 4px;
     border: 1px solid grey;
 }
 
-span {
-  display:inline-block;
-  line-height:1.3em;
-  vertical-align:middle;
+#stat{
+    width: 20px;
+    float: right;
+    padding-right: 2px;
+    padding-top: 2px;
+    margin-right: -1px;
+    height: 22px;
+    text-align: right;
+    border: 1px solid grey;
 }
