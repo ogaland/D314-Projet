@@ -33,7 +33,9 @@ td{
 #photo{
     text-align:center;
     width: 184px;
+    height: 184px;
     margin: auto;
+    padding-top: 5px;
     margin-top: 4px;
     border: 1px solid grey;
 }
