@@ -24,16 +24,16 @@ td{
 }
 
 #capteur{
-    width: 192px;
-    height: 258px;
+    width: 205px;
+    height: 285px;
     margin: auto;
     border: 1px solid grey;
 }
 
 #photo{
     text-align:center;
-    width: 184px;
-    height: 184px;
+    width: 195px;
+    height: 182px;
     margin: auto;
     padding-top: 5px;
     margin-top: 4px;
@@ -41,53 +41,46 @@ td{
 }
 
 #cadre_milieu{
-    width: 184px;
+    width: 195px;
     margin: auto;
     margin-top: 4px;
     height: 25px;
-    border: 1px solid grey;
 }
 
 #nom_capteur{
-    width: 120px;
+    width: 125px;
     float: left;
     height: auto;
-    padding-left: 4px;
 }
 
 #on-off{
-    width: 52px;
+    width: 65px;
     float: right;
-    padding-right: 4px;
     padding-top: 3px;
-    height: auto;
+    height: 20px;
     text-align: right;
 }
 
 #cadre_bas{
-    width: 184px;
+    width: 195px;
     margin: auto;
     margin-top: 4px;
     height: 25px;
 }
 
 #conso{
-    width: 152px;
+    width: 150px;
     float: left;
-    height: auto;
-    padding-left: 4px;
-    border: 1px solid grey;
+    height: 50px;
+    padding-top: -10px;
 }
 
 #stat{
-    width: 20px;
+    width: 38px;
     float: right;
     padding-right: 2px;
-    padding-top: 2px;
-    margin-right: -1px;
-    height: 22px;
+    height: 45px;
     text-align: right;
-    border: 1px solid grey;
 }
 
 #add{
@@ -95,4 +88,15 @@ td{
     height: auto;
     margin: auto;
     text-align: center;
+}
+
+#propriete_autre{
+    width: 200px;
+    float: left;
+    height: 50px;
+    padding-top: -10px;
+}
+
+.slider{
+    width:130px;
 }
