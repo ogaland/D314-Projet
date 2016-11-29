@@ -21,10 +21,16 @@ td
     vertical-align:middle;    
 }
 
+<<<<<<< HEAD:web/bakKlo/style/design.bak.css
 #capteur
 {
     width: 192px;
     height: 258px;
+=======
+#capteur{
+    width: 210px;
+    height: 290px;
+>>>>>>> origin/master:web/design.css
     margin: auto;
     border: 1px solid grey;
 }
@@ -32,37 +38,52 @@ td
 #photo
 {
     text-align:center;
-    width: 184px;
+    width: 195px;
+    height: 182px;
     margin: auto;
-    margin-top: 4px;
+    padding-top: 5px;
+    margin-top: 6px;
     border: 1px solid grey;
 }
 
+<<<<<<< HEAD:web/bakKlo/style/design.bak.css
 #cadre_milieu
 {
     width: 184px;
+=======
+#cadre_milieu{
+    width: 195px;
+>>>>>>> origin/master:web/design.css
     margin: auto;
     margin-top: 4px;
     height: 25px;
-    border: 1px solid grey;
 }
 
+<<<<<<< HEAD:web/bakKlo/style/design.bak.css
 #nom_capteur
 {
     width: 120px;
+=======
+#nom_capteur{
+    width: 125px;
+>>>>>>> origin/master:web/design.css
     float: left;
     height: auto;
-    padding-left: 4px;
+    padding-top: 7px;
 }
 
+<<<<<<< HEAD:web/bakKlo/style/design.bak.css
 #on-off
 {
     width: 52px;
+=======
+#on-off{
+>>>>>>> origin/master:web/design.css
     float: right;
-    padding-right: 4px;
     padding-top: 3px;
-    height: auto;
+    height: 30px;
     text-align: right;
+<<<<<<< HEAD:web/bakKlo/style/design.bak.css
 }
 
 #cadre_bas
@@ -76,22 +97,33 @@ td
 #conso
 {
     width: 152px;
-    float: left;
-    height: auto;
-    padding-left: 4px;
-    border: 1px solid grey;
+=======
+    margin-right: 5px;
 }
 
+#conso{
+    margin-top: 18px;
+    margin-left: 5px;
+    width: 150px;
+>>>>>>> origin/master:web/design.css
+    float: left;
+    height: 30px;
+    padding-top: -10px;
+}
+
+<<<<<<< HEAD:web/bakKlo/style/design.bak.css
 #stat
 {
     width: 20px;
+=======
+#stat{
+    width: 38px;
+>>>>>>> origin/master:web/design.css
     float: right;
-    padding-right: 2px;
-    padding-top: 2px;
-    margin-right: -1px;
-    height: 22px;
+    padding-right: 5px;
+    margin-top: 12px;
     text-align: right;
-    border: 1px solid grey;
+    margin-right: 4px;
 }
 
 #add
@@ -100,4 +132,20 @@ td
     height: auto;
     margin: auto;
     text-align: center;
+}
+
+#propriete_autre{
+    margin-left: 5px;
+    width: 200px;
+    float: left;
+    height: 50px;
+    padding-top: -10px;
+}
+
+.slider{
+    width:120px;
+}
+
+.heat{
+    width: 45px;
 }

@@ -13,23 +13,48 @@ and open the template in the editor.
     </head>
     <body>
         <table>
+            <tr><td><br/></td></tr>
             <tr>
                 <td>
+                    <form>
+                        <div id="capteur">
+                            <div id ="photo">
+                                <img src="img/compteur.png" />
+                            </div>
+                            <div id ="cadre_milieu">
+                                <div id="nom_capteur">
+                                    Compteur général
+                                </div>
+                                <div id="on-off">
+                                </div>
+                            </div>
+                            <div id ="cadre_bas">
+                                <div id="conso">
+                                    Consommation: 5500W
+                                </div>
+                                <div id="stat">
+                                    <img src="img/stat.png" />
+                                </div>
+                            </div>
+                        </div> 
+                    </form>
+                </td>
+                <td>
                     <div id="capteur">
                         <div id ="photo">
-                            <img src="img/standard.png" />
+                            <img src="img/frigo.png" />
                         </div>
                         <div id ="cadre_milieu">
                             <div id="nom_capteur">
-                                Capteur 1
+                                    <input type=text name=nom_capteur value="Frigidaire" size=17 maxlength=20/><br/>
                             </div>
                             <div id="on-off">
-                                <img src="img/ON.png" />
+                                <img src="img/ON.jpg" />
                             </div>
                         </div>
                         <div id ="cadre_bas">
                             <div id="conso">
-                                Conso : 1000 W 
+                                Consommation: 1000W
                             </div>
                             <div id="stat">
                                 <img src="img/stat.png" />
@@ -40,19 +65,19 @@ and open the template in the editor.
                 <td>
                     <div id="capteur">
                         <div id ="photo">
-                            <img src="img/standard.png" />
+                            <img src="img/machine_a_laver.png" />
                         </div>
                         <div id ="cadre_milieu">
                             <div id="nom_capteur">
-                                Capteur 2
+                                    <input type=text name=nom_capteur value="Machine à laver" size=17 maxlength=20/><br/>
                             </div>
                             <div id="on-off">
-                                <img src="img/ON.png" />
+                                <img src="img/OFF.jpg" />
                             </div>
                         </div>
                         <div id ="cadre_bas">
                             <div id="conso">
-                                Conso : 1000 W 
+                                Consommation: 0W
                             </div>
                             <div id="stat">
                                 <img src="img/stat.png" />
@@ -63,45 +88,31 @@ and open the template in the editor.
                 <td>
                     <div id="capteur">
                         <div id ="photo">
-                            <img src="img/standard.png" />
+                            <img src="img/ampoule_couleur.jpg" />
                         </div>
                         <div id ="cadre_milieu">
                             <div id="nom_capteur">
-                                Capteur 3
+                                    <input type=text name=nom_capteur value="Ampoule salon" size=17 maxlength=20/><br/>
                             </div>
                             <div id="on-off">
-                                <img src="img/OFF.png" />
+                                <img src="img/ON.jpg" />
                             </div>
                         </div>
                         <div id ="cadre_bas">
-                            <div id="conso">
-                                Conso : 1000 W 
-                            </div>
-                            <div id="stat">
-                                <img src="img/stat.png" />
-                            </div>
-                        </div>
-                    </div> 
-                </td>
-                <td>
-                    <div id="capteur">
-                        <div id ="photo">
-                            <img src="img/standard.png" />
-                        </div>
-                        <div id ="cadre_milieu">
-                            <div id="nom_capteur">
-                                Capteur 4
-                            </div>
-                            <div id="on-off">
-                                <img src="img/OFF.png" />
-                            </div>
-                        </div>
-                        <div id ="cadre_bas">
-                            <div id="conso">
-                                Conso : 1000 W 
-                            </div>
-                            <div id="stat">
-                                <img src="img/stat.png" />
+                            <div id="propriete_autre">
+                                <form method="post" action="traitement.php">
+                                        <label for="couleur">Couleur: </label>
+                                        <select name="couleur" id="couleur">
+                                            <option value="blanc">Blanc</option>
+                                            <option value="bleu">Bleu</option>
+                                            <option value="rouge">Rouge</option>
+                                            <option value="vert">Vert</option>
+                                            <option value="vert">Violet</option>
+                                        </select>
+                                        <br/>
+                                        <label for="couleur">Intensité: </label>
+                                        <input type="range" value="4" max="5" min="1" step="1" class="slider"/>
+                                 </form>
                             </div>
                         </div>
                     </div> 
@@ -112,19 +123,23 @@ and open the template in the editor.
                 <td>
                     <div id="capteur">
                         <div id ="photo">
-                            <img src="img/standard.png" />
+                            <img src="img/radiateur.png" />
                         </div>
                         <div id ="cadre_milieu">
                             <div id="nom_capteur">
-                                Capteur 5
+                                    <input type=text name=nom_capteur value="Radiateur" size=17 maxlength=20/><br/>
                             </div>
                             <div id="on-off">
-                                <img src="img/OFF.png" />
+                                <img src="img/ON.jpg" />
                             </div>
                         </div>
                         <div id ="cadre_bas">
                             <div id="conso">
-                                Conso : 1000 W 
+                                    <form method="post" action="traitement.php">
+                                        <label for="temperature">Température: </label>
+                                        <input type="number" value="18" min="0" max="35" step="1" size="2" class="heat"/> °C
+                                    </form>
+                                </div>
                             </div>
                             <div id="stat">
                                 <img src="img/stat.png" />
@@ -139,15 +154,15 @@ and open the template in the editor.
                         </div>
                         <div id ="cadre_milieu">
                             <div id="nom_capteur">
-                                Capteur 6
+                                    <input type=text name=nom_capteur value="Capteur 6" size=17 maxlength=20/><br/>
                             </div>
                             <div id="on-off">
-                                <img src="img/ON.png" />
+                                <img src="img/OFF.jpg" />
                             </div>
                         </div>
                         <div id ="cadre_bas">
                             <div id="conso">
-                                Conso : 1000 W 
+                                Consommation: 0W 
                             </div>
                             <div id="stat">
                                 <img src="img/stat.png" />
