@@ -24,7 +24,7 @@ td{
 }
 
 #capteur{
-    width: 205px;
+    width: 210px;
     height: 290px;
     margin: auto;
     border: 1px solid grey;
@@ -41,7 +41,7 @@ td{
 }
 
 #cadre_milieu{
-    width: 195px;
+    width: 200px;
     margin: auto;
     margin-top: 4px;
     height: 25px;
@@ -51,6 +51,7 @@ td{
     width: 125px;
     float: left;
     height: auto;
+    padding-top: 7px;
 }
 
 #on-off{
@@ -64,7 +65,7 @@ td{
 #conso{
     margin-top: 24px;
     margin-left: 5px;
-    width: 150px;
+    width: 155px;
     float: left;
     height: 30px;
     padding-top: -10px;
