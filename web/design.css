@@ -36,12 +36,12 @@ td{
     height: 182px;
     margin: auto;
     padding-top: 5px;
-    margin-top: 4px;
+    margin-top: 6px;
     border: 1px solid grey;
 }
 
 #cadre_milieu{
-    width: 200px;
+    width: 195px;
     margin: auto;
     margin-top: 4px;
     height: 25px;
@@ -63,9 +63,9 @@ td{
 }
 
 #conso{
-    margin-top: 24px;
+    margin-top: 18px;
     margin-left: 5px;
-    width: 155px;
+    width: 150px;
     float: left;
     height: 30px;
     padding-top: -10px;
@@ -74,7 +74,7 @@ td{
 #stat{
     width: 38px;
     float: right;
-    padding-right: 2px;
+    padding-right: 5px;
     margin-top: 12px;
     text-align: right;
     margin-right: 4px;
@@ -97,4 +97,8 @@ td{
 
 .slider{
     width:120px;
+}
+
+.heat{
+    width: 45px;
 }
