@@ -25,7 +25,7 @@ td{
 
 #capteur{
     width: 205px;
-    height: 285px;
+    height: 290px;
     margin: auto;
     border: 1px solid grey;
 }
@@ -54,24 +54,19 @@ td{
 }
 
 #on-off{
-    width: 65px;
     float: right;
     padding-top: 3px;
-    height: 20px;
+    height: 30px;
     text-align: right;
-}
-
-#cadre_bas{
-    width: 195px;
-    margin: auto;
-    margin-top: 4px;
-    height: 25px;
+    margin-right: 5px;
 }
 
 #conso{
+    margin-top: 24px;
+    margin-left: 5px;
     width: 150px;
     float: left;
-    height: 50px;
+    height: 30px;
     padding-top: -10px;
 }
 
@@ -79,8 +74,9 @@ td{
     width: 38px;
     float: right;
     padding-right: 2px;
-    height: 45px;
+    margin-top: 12px;
     text-align: right;
+    margin-right: 4px;
 }
 
 #add{
@@ -91,6 +87,7 @@ td{
 }
 
 #propriete_autre{
+    margin-left: 5px;
     width: 200px;
     float: left;
     height: 50px;
