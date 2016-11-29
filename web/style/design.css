@@ -17,9 +17,10 @@ body
     background: #ffffff;
 	border-radius: 2px;
 	display: inline-block;
-	height: 300px;
+	height: auto;
+	min-height:300px;
 	width: 300px;
-	margin: 1rem;
+	margin: 2rem;
 	position: relative;
 	
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -34,14 +35,16 @@ body
 .sensor-picture-type
 {
     text-align:center;
-    width: 184px;
+    width: 195px;
+    height: 182px;
     margin: auto;
-    margin-top: 4px;
+    padding-top: 5px;
+    margin-top: 6px;
 }
 
 .middle-frame
 {
-    width: 184px;
+    width: 250px;
     margin: auto;
     margin-top: 4px;
     height: 25px;
@@ -49,25 +52,23 @@ body
 
 .sensor-name
 {
-    width: 120px;
+    width: 125px;
     float: left;
     height: auto;
-    padding-left: 4px;
+    padding-top: 7px;
 }
 
 .state
 {
-    width: 52px;
     float: right;
-    padding-right: 4px;
     padding-top: 3px;
-    height: auto;
+    height: 30px;
     text-align: right;
 }
 
 .bottom-frame
 {
-    width: 184px;
+    width: 300px;
     margin: auto;
     margin-top: 4px;
     height: 25px;
@@ -75,21 +76,23 @@ body
 
 .sensor-value
 {
-    width: 152px;
+    margin-top: 18px;
+    margin-left: 5px;
+    width: 300px;
     float: left;
-    height: auto;
-    padding-left: 4px;
+    height: 30px;
+    margin-right: 10px;
+	text-align: center;
 }
 
 .statistical
 {
-    width: 20px;
+    width: 38px;
     float: right;
-    padding-right: 2px;
-    padding-top: 2px;
-    margin-right: -1px;
-    height: 22px;
+    padding-right: 5px;
+    margin-top: 12px;
     text-align: right;
+    margin-right: 4px;
 }
 
 #add
@@ -98,4 +101,23 @@ body
     height: auto;
     margin: auto;
     text-align: center;
+}
+
+.other-properties
+{
+    margin-left: 5px;
+    width: 200px;
+    float: left;
+    height: 50px;
+    padding-top: -10px;
+}
+
+.slider
+{
+    width:90px;
+}
+
+.heat
+{
+    width: 45px;
 }

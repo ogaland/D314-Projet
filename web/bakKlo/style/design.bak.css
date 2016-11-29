@@ -21,16 +21,10 @@ td
     vertical-align:middle;    
 }
 
-<<<<<<< HEAD:web/bakKlo/style/design.bak.css
-#capteur
-{
-    width: 192px;
-    height: 258px;
-=======
+
 #capteur{
     width: 210px;
     height: 290px;
->>>>>>> origin/master:web/design.css
     margin: auto;
     border: 1px solid grey;
 }
@@ -46,44 +40,28 @@ td
     border: 1px solid grey;
 }
 
-<<<<<<< HEAD:web/bakKlo/style/design.bak.css
-#cadre_milieu
-{
-    width: 184px;
-=======
+
 #cadre_milieu{
     width: 195px;
->>>>>>> origin/master:web/design.css
     margin: auto;
     margin-top: 4px;
     height: 25px;
 }
 
-<<<<<<< HEAD:web/bakKlo/style/design.bak.css
-#nom_capteur
-{
-    width: 120px;
-=======
+
 #nom_capteur{
     width: 125px;
->>>>>>> origin/master:web/design.css
     float: left;
     height: auto;
     padding-top: 7px;
 }
 
-<<<<<<< HEAD:web/bakKlo/style/design.bak.css
-#on-off
-{
-    width: 52px;
-=======
+
 #on-off{
->>>>>>> origin/master:web/design.css
     float: right;
     padding-top: 3px;
     height: 30px;
     text-align: right;
-<<<<<<< HEAD:web/bakKlo/style/design.bak.css
 }
 
 #cadre_bas
@@ -94,31 +72,18 @@ td
     height: 25px;
 }
 
-#conso
-{
-    width: 152px;
-=======
-    margin-right: 5px;
-}
-
 #conso{
     margin-top: 18px;
     margin-left: 5px;
     width: 150px;
->>>>>>> origin/master:web/design.css
     float: left;
     height: 30px;
     padding-top: -10px;
 }
 
-<<<<<<< HEAD:web/bakKlo/style/design.bak.css
-#stat
-{
-    width: 20px;
-=======
+
 #stat{
     width: 38px;
->>>>>>> origin/master:web/design.css
     float: right;
     padding-right: 5px;
     margin-top: 12px;
