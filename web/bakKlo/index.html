@@ -9,8 +9,21 @@ and open the template in the editor.
         <title>Moniteur</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style/design.bak.css"/>
-    </head>
+        <link rel="stylesheet" href="design.css"/>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $(document).ready(function() {
+               $('#Popup').click(function() {
+                   var newwindow = window.open($(this).prop('href'), '', 'height=800,width=800');
+                   if (window.focus) {
+                       newwindow.focus();
+                   }
+                   return false;
+               });
+           });
+        </script>
+     </head>
     <body>
         <table>
             <tr><td><br/></td></tr>
@@ -33,7 +46,9 @@ and open the template in the editor.
                                     Consommation: 5500W
                                 </div>
                                 <div id="stat">
-                                    <img src="img/stat.png" />
+                                    <a href="graph.html" id="Popup">
+                                        <img src="img/stat.png" />
+                                    </a>
                                 </div>
                             </div>
                         </div> 

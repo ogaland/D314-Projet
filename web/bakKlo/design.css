@@ -11,7 +11,6 @@ and open the template in the editor.
 body{
     font-family: calibri light;
     font-size: 14px;
-    background: lightgray;
 }
 
 table{
@@ -28,11 +27,7 @@ td{
     width: 210px;
     height: 290px;
     margin: auto;
-   // border: 1px solid grey;
-    background: white;
-    border-radius: 2px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    border: 1px solid grey;
 }
 
 #photo{
@@ -40,9 +35,9 @@ td{
     width: 195px;
     height: 182px;
     margin: auto;
-    padding-top: 10px;
+    padding-top: 5px;
     margin-top: 6px;
-  /*  border: 1px solid grey;*/
+    border: 1px solid grey;
 }
 
 #cadre_milieu{
