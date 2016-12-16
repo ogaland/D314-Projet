@@ -2,53 +2,49 @@
 <html>
     <head>
 	<script type="text/javascript">
-	window.onload = function() {
-            var chart = new CanvasJS.Chart("chartContainer", {
-                title: {
-                        text: "Consommation Electrique (Watts)"
-                },
-                axisX: {
-                        title: false,
-                        interlacedColor: "azure",
-                        tickColor: "azure",
-                        titleFontColor: "rgb(0,75,141)",
-                        valueFormatString: "DD-MMM-YYYY" ,
-                        interval: 7,
-                        intervalType: "day",
-                        labelAngle: -50,
-                        labelFontColor: "rgb(0,75,141)",
-                        minimum: new Date(2012,06,15)
-                },
-                axisY : {
-                        title: false,
-                        interlacedColor: "azure",
-                        tickColor: "azure",
-                        titleFontColor: "rgb(0,75,141)",
-                },
-                data: [{
-                    type: "line",
-                    dataPoints: [
-                    { x: new Date(2012, 06, 15), y: 0 },   
-                    { x: new Date(2012, 06, 18), y: 2000 }, 
-                    { x: new Date(2012, 06, 23), y: 6000 }, 
-                    { x: new Date(2012, 07, 1), y: 10000 }, 
-                    { x: new Date(2012, 07, 11), y: 2100 }, 
-                    { x: new Date(2012, 07, 12), y: 2450 }, 
-                    { x: new Date(2012, 07, 13), y: 1245 }, 
-                    { x: new Date(2012, 07, 14), y: 2456 }, 
-                    { x: new Date(2012, 07, 15), y: 2118 }, 
-                    { x: new Date(2012, 07, 16), y: 1987 }, 
-                    { x: new Date(2012, 07, 23), y: 5000 }, 
-                    { x: new Date(2012, 07, 31), y: 7500  }, 
-                    { x: new Date(2012, 08, 04), y: 1000 },
-                    { x: new Date(2012, 08, 10), y: 12500},
-                    { x: new Date(2012, 08, 13), y: 15000},	
-                    { x: new Date(2012, 08, 16), y: 17500}
-                    ]
-                }]
-            });
-            chart.render();
-	}
+            window.onload = function () {
+                var chart = new CanvasJS.Chart("chartContainer",
+                {
+                        zoomEnabled: true,      
+                        title:{
+                                text: "Consommation Electrique (Watts)" 
+                        },
+                        axisX :{
+                                labelAngle: -30
+                        },
+                        axisY :{
+                                includeZero: false
+                        },
+                        data: data,  // random generator below
+                });
+                chart.render();
+            }
+
+            var limit = 1000;    //increase number of dataPoints by increasing this
+
+            var y = 0;
+            var data = []; var dataSeries = { type: "line" };
+            var dataPoints = [];
+            for (var i = 0; i < limit; i++) {
+                y += Math.round(5 + Math.random() * (-5 - 5));	
+                dateTime = new Date(2010, 01, 01);
+
+                //dateTime.setMilliseconds(dateTime.getMilliseconds() + i);
+                //dateTime.setSeconds(dateTime.getSeconds() + i);
+                //dateTime.setMinutes(dateTime.getMinutes() + i);
+                //dateTime.setHours(dateTime.getHours() + i);
+                dateTime.setDate(dateTime.getDate() + i);
+                //dateTime.setMonth(dateTime.getMonth() + i);
+                //dateTime.setFullYear(dateTime.getFullYear() + i);
+
+                dataPoints.push({         
+                        x: dateTime,
+                        y: y
+                });
+            }
+            
+            dataSeries.dataPoints = dataPoints;
+            data.push(dataSeries);   
 	</script>
 	<script src="js/canvasjs.min.js"></script>
 	<title>Consommation Electrique</title>
