@@ -35,25 +35,29 @@ public class Controller {
     private final List<Sensor> sensors = new ArrayList(maxNbSensor);
     private final List<List<Thread>> th = new ArrayList(maxNbSensor);
     
-    public Controller(){
-        try{
+    public Controller()
+    {
+        try
+        {
             //ajout des capteurs à la liste des sensor
             addSensor("Prise salon","Prise");
             addSensor("Compteur maison","Compteur");
             addSensor("Ampoule","Ampoule");
             addSensor("Capteur temperature","Temperature");
             
-        }catch(Exception e){
-            System.out.println(e.getMessage());
         }
-        
-        
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }     
     }
     
-    public List<Map<String,Object>> getListSensors() throws JsonProcessingException{
+    public List<Map<String,Object>> getListSensors() throws JsonProcessingException
+    {
         //construit un string json de la liste des capteur pour envoi au client web
         List<Map<String,Object>> tmp = new ArrayList();
-        for(int i =0; i < currentNbSensor; i++){
+        for(int i =0; i < currentNbSensor; i++)
+        {
             tmp.add(i,new HashMap<String, Object>());
             tmp.get(i).put("Id",sensors.get(i).getId());
             tmp.get(i).put("Type",sensors.get(i).getType());
@@ -61,76 +65,104 @@ public class Controller {
             tmp.get(i).put("Info",sensors.get(i).getInformations());
         }
         return tmp;
-    }; 
+    }
     
     
     
-    public String[] getInfoSensor(int id) throws JsonProcessingException, Exception{
+    public String[] getInfoSensor(int id) throws JsonProcessingException, Exception
+    {
         Sensor s = getSensor(id);
         return s.getInformations();
         
-    }; 
+    }
     
-    public String switchPower(int id) throws Exception{
+    public String switchPower(int id) throws Exception
+    {
         Sensor s = getSensor(id);
         s.switchPower();
         return s.getDevice().getState();
-    };
+    }
     
-    public String changeColor(int id, String color) throws Exception{
+    public String changeColor(int id, String color) throws Exception
+    {
         Sensor s = getSensor(id);
         s.getType();
-        if("Ampoule".equals(s.getType())){
-            LightBulb lb = (LightBulb) s.getDevice();
+        if("Ampoule".equals(s.getType()))
+        {
+            LightBulb lb = (LightBulb)s.getDevice();
             lb.setColor(color);
-        }else{
+        }
+        else
+        {
             throw new Exception("Le device n'est pas une ampoule");
         }
         return color;
-    };
+    }
     
-    public String changeTemperature(int id, int temp) throws Exception{
+    public String changeLuminosity(int id, int luminosity) throws Exception
+    {
         Sensor s = getSensor(id);
         s.getType();
-        if("Ampoule".equals(s.getType())){
-            TemperatureDevice td = (TemperatureDevice) s.getDevice();
-            td.setTemperature(temp);
-        }else{
+        if("Ampoule".equals(s.getType()))
+        {
+            LightBulb lb = (LightBulb)s.getDevice();
+            lb.setBrightness(luminosity);
+        }
+        else
+        {
             throw new Exception("Le device n'est pas une ampoule");
         }
-        return String.valueOf(temp);
-    };
+        return String.valueOf(luminosity);
+    }
     
-    public String changeName(int id,String name) throws Exception{
+    public String changeTemperature(int id, int temp) throws Exception
+    {
+        Sensor s = getSensor(id);
+        s.getType();
+        if("Temperature".equals(s.getType()))
+        {
+            TemperatureDevice td = (TemperatureDevice)s.getDevice();
+            td.setTemperature(temp);
+        }
+        else
+        {
+            throw new Exception("Le device n'est pas un chauffage");
+        }
+        return String.valueOf(temp);
+    }
+    
+    public String changeName(int id,String name) throws Exception
+    {
         Sensor s = getSensor(id);
         s.setName(name);
         return s.getName();
-    };
+    }
     
-    public int addSensor(String nom, String type) throws Exception{
-        try{
+    public int addSensor(String nom, String type) throws Exception
+    {
+        try
+        {
             Device device;
-            /* ajoute un sensor avec pour name nom en fonction du type*/
-            switch(type){
+            /* ajoute un sensor avec pour name nom en fonction du type */
+            switch(type)
+            {
                 case "Prise" :
                     device = new ElectricalPlug();
-                    sensors.add(currentNbSensor,new ElectricalPlugSensor(nom, (ElectricalPlug)device));
-                break;
+                    sensors.add(currentNbSensor, new ElectricalPlugSensor(nom, (ElectricalPlug)device));
+                    break;
                 case "Compteur":
                     device = new ElectricMeter();
-                    sensors.add(currentNbSensor,new ElectricMeterSensor(nom, (ElectricMeter)device));
-                break;
-
+                    sensors.add(currentNbSensor, new ElectricMeterSensor(nom, (ElectricMeter)device));
+                    break;
                 case "Ampoule":
                     device = new LightBulb();
-                    sensors.add(currentNbSensor,new LightBulbSensor(nom, (LightBulb)device));
-                break;
-
+                    sensors.add(currentNbSensor, new LightBulbSensor(nom, (LightBulb)device));
+                    break;
                 case "Temperature":
                     device = new TemperatureDevice();
-                    sensors.add(currentNbSensor,new TemperatureSensor(nom, (TemperatureDevice)device));
-                break;
-                default : 
+                    sensors.add(currentNbSensor, new TemperatureSensor(nom, (TemperatureDevice)device));
+                    break;
+                default: 
                     throw new Exception("Vous devez indiquer un type de capteur");
             }
             
@@ -146,36 +178,43 @@ public class Controller {
 
             /*Retourne l'indice du sensor nouvellement créé*/
             return (currentNbSensor - 1);
-        }catch(Exception e){
+        }
+        catch(Exception e)
+        {
             throw e;
         }
     }
     
-    public String deleteSensor(int id){
+    public String deleteSensor(int id)
+    {
         //construit un string json de la liste des capteur pour envoi au client web
         List<Map<String,Object>> tmp = new ArrayList();
-        for(int i =0; i < currentNbSensor; i++){
-            if(sensors.get(i).getId() == id){
+        for(int i =0; i < currentNbSensor; i++)
+        {
+            if(sensors.get(i).getId() == id)
+            {
                 sensors.remove(i);
                 th.remove(i);
                 return "Le capteur à été supprimé";
-            }
-            
+            }        
         }
         return "Impossible de supprimer le capteur";
-    }; 
+    }
     
-    private Sensor getSensor(int id)throws Exception{
-        
-        for(int i =0; i < currentNbSensor; i++){
-            if(sensors.get(i).getId() == id ){
+    private Sensor getSensor(int id) throws Exception
+    {
+        for(int i = 0; i < currentNbSensor; i++)
+        {
+            if(sensors.get(i).getId() == id )
+            {
                 return sensors.get(i);
             }
         }
         throw new Exception("Impossible de trouver le sensor");
-    };
+    }
     
-    private String getJsonFromObject(Object o) throws JsonProcessingException{
+    private String getJsonFromObject(Object o) throws JsonProcessingException
+    {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(o);
     }

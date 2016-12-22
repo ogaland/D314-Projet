@@ -6,9 +6,7 @@
 package com.miage.sensors;
 
 import com.miage.dao.DAOLightBulbSensor;
-import com.miage.device.Device;
 import com.miage.device.LightBulb;
-import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +15,8 @@ import java.util.logging.Logger;
  * Capteur d'ampoule
  * @author ko
  */
-public class LightBulbSensor extends Sensor implements Runnable{
+public class LightBulbSensor extends Sensor implements Runnable
+{
     private LightBulb lightBulb;
     
     /**
@@ -25,7 +24,8 @@ public class LightBulbSensor extends Sensor implements Runnable{
      * @param name
      * @param device 
      */
-    public LightBulbSensor(String name, LightBulb device) {
+    public LightBulbSensor(String name, LightBulb device) 
+    {
         super(name, "Ampoule");
         this.lightBulb = device; 
         createDB(); 
@@ -36,7 +36,8 @@ public class LightBulbSensor extends Sensor implements Runnable{
      * Met à jour l'ampoule du capteur
      * @param device 
      */
-    public void setDevice(LightBulb device){
+    public void setDevice(LightBulb device)
+    {
         this.lightBulb = device;
     }
     
@@ -46,14 +47,16 @@ public class LightBulbSensor extends Sensor implements Runnable{
      */
     
     @Override
-    public LightBulb getDevice(){
+    public LightBulb getDevice()
+    {
         return this.lightBulb;
     } 
     /**
      * Enregistre le comportement de l'appareil (device) : Ampoule
      */
     @Override
-    public void recordBehavior() {
+    public void recordBehavior() 
+    {
         DAOLightBulbSensor DAOSensor = new DAOLightBulbSensor();    
         String state = this.getDevice().getState();
         String color = this.getDevice().getColor();
@@ -66,14 +69,16 @@ public class LightBulbSensor extends Sensor implements Runnable{
      * Créer une table associée au capteur dans la base de donnée
      */
     @Override
-    public final void createDB() {
+    public final void createDB() 
+    {
         DAOLightBulbSensor DAOSensor = new DAOLightBulbSensor();
         DAOSensor.createNewDatabase("capteur_"+this.getId()+".db");
         DAOSensor.createNewTable("capteur_"+this.getId());   
     }
 
     @Override
-    public String[] getInformations() {
+    public String[] getInformations() 
+    {
         DAOLightBulbSensor DAOSensor = new DAOLightBulbSensor();                 
         return DAOSensor.getLastRecord(this.getId());
     }
@@ -82,10 +87,14 @@ public class LightBulbSensor extends Sensor implements Runnable{
      * Change l'état de l'appareil : on ou off selon l'état courant
      */
     @Override
-    public void switchPower() {
-        if(this.lightBulb.getState()=="on"){
+    public void switchPower() 
+    {
+        if(this.lightBulb.getState().equals("on"))
+        {
             this.lightBulb.setState("off");
-        }else{
+        }
+        else
+        {
             this.lightBulb.setState("on");
         }      
     }
@@ -95,7 +104,8 @@ public class LightBulbSensor extends Sensor implements Runnable{
      * @return String
      */
     @Override
-    public String toString(){
+    public String toString()
+    {
         String s; 
         s = "Capteur n° " + this.getId() 
                 + "\n - Nom : " + this.getName()
@@ -108,12 +118,17 @@ public class LightBulbSensor extends Sensor implements Runnable{
     }
 
     @Override
-    public void run() {
-       while(this.getDevice().getState()=="on"){
+    public void run() 
+    {
+       while(this.getDevice().getState().equals("on"))
+       {
             recordBehavior();
-            try {
-                sleep(10000);
-            } catch (InterruptedException ex) {
+            try 
+            {
+                Thread.sleep(Sensor.SLEEP_TIME);
+            } 
+            catch (InterruptedException ex) 
+            {
                 Logger.getLogger(ElectricMeterSensor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

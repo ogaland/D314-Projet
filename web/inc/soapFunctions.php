@@ -56,6 +56,14 @@ function changeTemperature($pId, $pTemperature)
 	return json_decode($result->{'return'});
 }
 
+# Changement de la luminosité du capteur(id)
+function changeLuminosity($pId, $pLuminosity)
+{
+	global $soapClient;
+	$result = $soapClient->changeLuminosity(array("id"=>$pId, "luminosity"=>$pLuminosity));
+	return json_decode($result->{'return'});
+}
+
 # Ajouter un capteur
 function addSensor($pType, $pName)
 {

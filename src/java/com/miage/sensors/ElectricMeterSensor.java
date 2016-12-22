@@ -7,7 +7,6 @@ package com.miage.sensors;
 
 import com.miage.dao.DAOElectricMeterSensor;
 import com.miage.device.ElectricMeter;
-import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,7 +15,8 @@ import java.util.logging.Logger;
  * Capteur de compteur electrique
  * @author ko
  */
-public class ElectricMeterSensor extends Sensor implements Runnable{
+public class ElectricMeterSensor extends Sensor implements Runnable
+{
     private ElectricMeter electricMeter;
     
     /**
@@ -24,11 +24,11 @@ public class ElectricMeterSensor extends Sensor implements Runnable{
      * @param name
      * @param device 
      */
-    public ElectricMeterSensor(String name, ElectricMeter device) {
+    public ElectricMeterSensor(String name, ElectricMeter device) 
+    {
         super(name, "Compteur");
         this.electricMeter = device;
         createDB(); 
-        
     }
     
     //getters and setters
@@ -36,7 +36,8 @@ public class ElectricMeterSensor extends Sensor implements Runnable{
      * Met à jour la prise électrique du capteur
      * @param device 
      */
-    public void setDevice(ElectricMeter device){
+    public void setDevice(ElectricMeter device)
+    {
         this.electricMeter = device;
     }
     
@@ -45,7 +46,8 @@ public class ElectricMeterSensor extends Sensor implements Runnable{
      * @return ElectricMeter 
      */
     @Override
-    public ElectricMeter getDevice(){
+    public ElectricMeter getDevice()
+    {
         return this.electricMeter;
     }
     
@@ -53,19 +55,19 @@ public class ElectricMeterSensor extends Sensor implements Runnable{
      * Enregistre le comportement de l'appareil (device) : compteur
      */
     @Override
-    public synchronized void  recordBehavior() {
-        
+    public synchronized void  recordBehavior()
+    {
         DAOElectricMeterSensor DAOSensor = new DAOElectricMeterSensor();
         int consumption = this.getDevice().getCurrentConsumption();
-        DAOSensor.insert(this.getId(), consumption);
-      
+        DAOSensor.insert(this.getId(), consumption);     
     }
     
     /**
      * Créer une table associée au capteur dans la base de donnée
      */
     @Override
-    public final void createDB() {      
+    public final void createDB() 
+    {      
         DAOElectricMeterSensor DAOSensor = new DAOElectricMeterSensor();
         DAOSensor.createNewDatabase("capteur_"+this.getId()+".db");
         DAOSensor.createNewTable("capteur_"+this.getId());          
@@ -77,7 +79,8 @@ public class ElectricMeterSensor extends Sensor implements Runnable{
      * @return String[]
      */
     @Override
-    public synchronized String[]  getInformations() {
+    public synchronized String[]  getInformations()
+    {
         DAOElectricMeterSensor DAOSensor = new DAOElectricMeterSensor();                 
         return DAOSensor.getLastRecord(this.getId());
     }
@@ -88,7 +91,8 @@ public class ElectricMeterSensor extends Sensor implements Runnable{
      * @return String
      */
     @Override
-    public String toString(){
+    public String toString()
+    {
         String s; 
         s = "Capteur n° " + this.getId() 
                 + " - nom : " + this.getName()
@@ -98,17 +102,23 @@ public class ElectricMeterSensor extends Sensor implements Runnable{
     }
 
     @Override
-    public void switchPower() {
+    public void switchPower() 
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void run() {
-        while(this.getDevice().getState()=="on"){
+    public void run() 
+    {
+        while(this.getDevice().getState().equals("on"))
+        {
             recordBehavior();
-            try {
-                sleep(10000);
-            } catch (InterruptedException ex) {
+            try 
+            {
+                Thread.sleep(Sensor.SLEEP_TIME);
+            } 
+            catch (InterruptedException ex)
+            {
                 Logger.getLogger(ElectricMeterSensor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

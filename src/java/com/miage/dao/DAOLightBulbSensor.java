@@ -15,10 +15,12 @@ import java.sql.Statement;
  *
  * @author User
  */
-public class DAOLightBulbSensor extends DAOManager{
+public class DAOLightBulbSensor extends DAOManager
+{
 
     @Override
-    public void createNewTable(String dbName) {
+    public void createNewTable(String dbName)
+    {
         
         // requete sql de creation de la table
         String requete = "CREATE TABLE IF NOT EXISTS consumption_"+ dbName + "("
@@ -32,12 +34,15 @@ public class DAOLightBulbSensor extends DAOManager{
                 Statement stmt = conn.createStatement()) {
             // create a new table
             stmt.execute(requete);
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) 
+        {
             System.out.println(e.getMessage());
         }
     }
 
-    public void insert(int idSensor, String state, String color, int brightness, int consumption) {
+    public void insert(int idSensor, String state, String color, int brightness, int consumption) 
+    {
         String dbFile ="capteur_"+idSensor+".db";
         
         String dbName ="consumption_capteur_"+idSensor;
@@ -52,13 +57,16 @@ public class DAOLightBulbSensor extends DAOManager{
             pstmt.setInt(3, brightness);
             pstmt.setInt(4, consumption);
             pstmt.executeUpdate();
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) 
+        {
             System.out.println(e.getMessage());
         }
     }
 
     @Override
-    public String[] getLastRecord(int idSensor) {
+    public String[] getLastRecord(int idSensor) 
+    {
         String[] lastRecord = new String[6];
         
         String dbFile ="capteur_"+idSensor+".db";
@@ -68,17 +76,20 @@ public class DAOLightBulbSensor extends DAOManager{
         
         try (Connection conn = this.connect(dbFile);
              Statement stmt  = conn.createStatement();
-                ResultSet rs  = stmt.executeQuery(requete);){
+                ResultSet rs  = stmt.executeQuery(requete);) {
             
-            while(rs.next()){
-                for(int i = 0; i<lastRecord.length ; i++){
+            while(rs.next())
+            {
+                for(int i = 0; i<lastRecord.length ; i++)
+                {
                     lastRecord[i] = rs.getObject(i+1).toString();
                 }
             }      
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) 
+        {
             System.out.println(e.getMessage());
         }
         return lastRecord;
-    }
-    
+    }   
 }

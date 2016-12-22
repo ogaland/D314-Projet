@@ -7,9 +7,11 @@ import com.miage.device.Device;
  * Classe abstraite capteur
  * @author ko
  */
-public abstract class Sensor {
+public abstract class Sensor 
+{
     
      //Attributs
+    public static final int SLEEP_TIME = 5000;
     private static int idSensors = 0;
     private final int id;
     private String name;
@@ -21,7 +23,8 @@ public abstract class Sensor {
      * @param type
      * @param device
      */
-    Sensor(String name, String type){
+    Sensor(String name, String type)
+    {
         //À chaque instanciation d'un capteur on lui attribut un id par auto-incrémentation
         this.id = ++idSensors;
         this.name = name;
@@ -33,7 +36,8 @@ public abstract class Sensor {
      * Retourne le nom du capteur.
      * @return String
      */
-    public String getName(){
+    public String getName()
+    {
         return this.name;
     }
     
@@ -41,7 +45,8 @@ public abstract class Sensor {
      * Met à jour le nom du capteur.
      * @param name
      */
-    public void setName(String name){
+    public void setName(String name)
+    {
         this.name = name;
     }
     
@@ -49,7 +54,8 @@ public abstract class Sensor {
      * Retourne le type du capteur.
      * @return String
      */
-    public String getType(){
+    public String getType()
+    {
         return this.type;
     }
     
@@ -57,7 +63,8 @@ public abstract class Sensor {
      * Met à jour le type du capteur.
      * @param type
      */
-    public void setType(String type){
+    public void setType(String type)
+    {
         this.type = type;
     }
     
@@ -65,12 +72,10 @@ public abstract class Sensor {
      * Retourne l'id du capteur.
      * @return int 
      */
-    public int getId(){
+    public int getId()
+    {
         return this.id;
     }
-    
-    
-
     
     //Méthodes abstraites implémentées dans les classes filles
     

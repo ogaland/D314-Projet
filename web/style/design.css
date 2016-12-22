@@ -4,6 +4,11 @@
 	Update		: Mathieu Febvay
 */
 
+*
+{
+	box-sizing: border-box;
+}
+
 body
 {
     font-family: calibri light;
@@ -18,7 +23,7 @@ body
 	border-radius: 2px;
 	display: inline-block;
 	height: auto;
-	min-height:300px;
+	min-height:450px;
 	width: 300px;
 	margin: 2rem;
 	position: relative;
@@ -35,89 +40,148 @@ body
 .sensor-picture-type
 {
     text-align:center;
-    width: 195px;
-    height: 182px;
-    margin: auto;
-    padding-top: 5px;
-    margin-top: 6px;
+    margin: 5px;
+	margin-top: 10px;
 }
 
 .middle-frame
 {
-    width: 250px;
+    width: 200px;
+	height: 20px;
     margin: auto;
-    margin-top: 4px;
-    height: 25px;
+    margin-top: 10px;
 }
 
 .sensor-name
 {
-    width: 125px;
     float: left;
-    height: auto;
-    padding-top: 7px;
+    margin: auto;
+	margin-top: 12px;
+	height: 20px;
+	border: none;
 }
 
 .state
 {
     float: right;
-    padding-top: 3px;
-    height: 30px;
-    text-align: right;
+	margin: auto;
 }
 
 .bottom-frame
 {
-    width: 300px;
+    width: auto;
     margin: auto;
-    margin-top: 4px;
-    height: 25px;
+    margin-top: 20px;
+    height: auto;
 }
 
 .sensor-value
 {
-    margin-top: 18px;
-    margin-left: 5px;
+    margin-top: 10px;
+    margin-left: 10px;
     width: 300px;
     float: left;
-    height: 30px;
+    height: 20px;
     margin-right: 10px;
 	text-align: center;
 }
 
 .statistical
 {
-    width: 38px;
     float: right;
-    padding-right: 5px;
-    margin-top: 12px;
+    margin-top: 30px;
     text-align: right;
-    margin-right: 4px;
-}
-
-#add
-{
-    width: 192px;
-    height: auto;
-    margin: auto;
-    text-align: center;
+    margin-right: 10px;
 }
 
 .other-properties
 {
-    margin-left: 5px;
-    width: 200px;
-    float: left;
-    height: 50px;
-    padding-top: -10px;
+    margin: auto;
+	margin-top: 10px;
+    width: 300px;
+    height: auto;
 }
 
-.slider
+.label-color
 {
-    width:90px;
+	text-align: center;
+	margin: auto;
+	margin-left: 30px;
+	margin-top:10px;
+	height: 20px;
+	float: left;
 }
 
-.heat
+.label-luminosity
 {
-    width: 45px;
+	text-align: center;
+	margin: auto;
+	margin-left: 30px;
+	margin-top: 10px;
+	height: 20px;
+	float: left;
+}
+
+.label-temperature
+{
+	text-align: center;
+	margin: auto;
+	margin-left: 30px;
+	margin-top:10px;
+	height: 20px;
+	float: left;
+}
+
+.choose-color
+{
+	text-align: right;
+	width: 150px;
+	margin: auto;
+	margin-right: 30px;
+	margin-top:10px;
+	height: 20px;
+	float: right;
+}
+
+.choose-luminosity
+{
+	text-align: center;
+	width: 90px;
+	margin: auto;
+	margin-right: 30px;
+	margin-top:10px;
+	height: 20px;
+	float: right;
+}
+
+.choose-temperature
+{
+	text-align: right;
+	width: 45px;
+	margin: auto;
+	margin-right: 40px;
+	margin-top:10px;
+	height: 20px;
+	float: right;
+}
+
+.add-sensor
+{
+	background: #ffffff;
+	border-radius: 2px;
+	height:300px;
+	width: 300px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	margin: 2rem;
+	display: inline-block;
+	position: relative;
+}
+
+#add
+{
+    margin: auto;
+	margin-top: 22px;
+	
+	text-align: center;
+	
 }

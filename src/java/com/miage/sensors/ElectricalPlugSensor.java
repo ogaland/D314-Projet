@@ -7,7 +7,6 @@ package com.miage.sensors;
 
 import com.miage.dao.DAOElectricalPlugSensor;
 import com.miage.device.ElectricalPlug;
-import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,7 +14,8 @@ import java.util.logging.Logger;
  * Capteur de prise électrique
  * @author ko
  */
-public class ElectricalPlugSensor extends Sensor implements Runnable{
+public class ElectricalPlugSensor extends Sensor implements Runnable
+{
     private ElectricalPlug electricalPlug;
     
     /**
@@ -23,7 +23,8 @@ public class ElectricalPlugSensor extends Sensor implements Runnable{
      * @param name
      * @param device 
      */
-    public ElectricalPlugSensor(String name, ElectricalPlug device) {
+    public ElectricalPlugSensor(String name, ElectricalPlug device)
+    {
         super(name,"Prise");
         this.electricalPlug = device;
         createDB();       
@@ -34,7 +35,8 @@ public class ElectricalPlugSensor extends Sensor implements Runnable{
      * Met à jour la prise électrique du capteur
      * @param device 
      */
-    public void setDevice(ElectricalPlug device){
+    public void setDevice(ElectricalPlug device)
+    {
         this.electricalPlug = device;
     }
     
@@ -43,7 +45,8 @@ public class ElectricalPlugSensor extends Sensor implements Runnable{
      * @return ElectricalPlug 
      */
     @Override
-    public ElectricalPlug getDevice(){
+    public ElectricalPlug getDevice()
+    {
         return this.electricalPlug;
     }
     
@@ -51,7 +54,8 @@ public class ElectricalPlugSensor extends Sensor implements Runnable{
      * Enregistre le comportement de l'appareil (device) : prise
      */
     @Override
-    public void recordBehavior() {    
+    public void recordBehavior() 
+    {    
         DAOElectricalPlugSensor DAOSensor = new DAOElectricalPlugSensor();
         int consumption = this.getDevice().getCurrentConsumption();
         String state = this.getDevice().getState();
@@ -62,7 +66,8 @@ public class ElectricalPlugSensor extends Sensor implements Runnable{
      * Créer une table associée au capteur dans la base de donnée
      */
     @Override
-    public final void createDB() {
+    public final void createDB() 
+    {
         DAOElectricalPlugSensor DAOSensor = new DAOElectricalPlugSensor();
         DAOSensor.createNewDatabase("capteur_"+this.getId()+".db");
         DAOSensor.createNewTable("capteur_"+this.getId());
@@ -74,7 +79,8 @@ public class ElectricalPlugSensor extends Sensor implements Runnable{
      * @return String[]
      */
     @Override
-    public String[] getInformations() {
+    public String[] getInformations() 
+    {
         DAOElectricalPlugSensor DAOSensor = new DAOElectricalPlugSensor();                 
         return DAOSensor.getLastRecord(this.getId());
     }
@@ -83,10 +89,14 @@ public class ElectricalPlugSensor extends Sensor implements Runnable{
      * Change l'état de l'appareil : on ou off selon l'état courant
      */
     @Override
-    public void switchPower() {
-        if(this.electricalPlug.getState()=="on"){
+    public void switchPower() 
+    {
+        if(this.electricalPlug.getState().equals("on"))
+        {
             this.electricalPlug.setState("off");
-        }else{
+        }
+        else
+        {
             this.electricalPlug.setState("on");
         }      
     }
@@ -96,7 +106,8 @@ public class ElectricalPlugSensor extends Sensor implements Runnable{
      * @return String
      */
     @Override
-    public String toString(){
+    public String toString()
+    {
         String s; 
         s = "Capteur n° " + this.getId() 
                 + "\n - nom : " + this.getName()
@@ -107,12 +118,17 @@ public class ElectricalPlugSensor extends Sensor implements Runnable{
     }
 
     @Override
-    public void run() {
-        while(this.getDevice().getState()=="on"){
+    public void run() 
+    {
+        while(this.getDevice().getState().equals("on"))
+        {
             recordBehavior();
-            try {
-                sleep(10000);
-            } catch (InterruptedException ex) {
+            try 
+            {
+                Thread.sleep(Sensor.SLEEP_TIME);
+            } 
+            catch (InterruptedException ex) 
+            {
                 Logger.getLogger(ElectricMeterSensor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
