@@ -1,6 +1,8 @@
 package com.miage.sensors;
 
+import com.miage.dao.DAOManager;
 import com.miage.device.Device;
+import java.util.ArrayList;
 
 
 /**
@@ -77,10 +79,24 @@ public abstract class Sensor
         return this.id;
     }
     
-    //Méthodes abstraites implémentées dans les classes filles
+    public ArrayList<String> getStats(String beginDate, String endDate){
+        DAOManager DAOSensor = new DAOManager() {
+            @Override
+            public void createNewTable(String dbName) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public String[] getLastRecord(int idSensor) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        };
+        ArrayList<String> stats = DAOSensor.getStats(this.getId(),beginDate, endDate);
+        return stats;
+    }
 
     /**
-     *
+     * Méthodes abstraites implémentées dans les classes filles
      */
   
     public abstract void switchPower();

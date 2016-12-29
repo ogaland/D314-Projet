@@ -4,13 +4,17 @@ package com.miage.dao;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author ko
  */
-abstract class DAOManager {    
+public abstract class DAOManager {    
     /**
      * Connect to a sample database
      * @param dbName
@@ -44,6 +48,38 @@ abstract class DAOManager {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+    
+    /**
+     * Récupère les consommations entre deux dates données
+     * @param idSensor
+     * @param beginDate
+     * @param endDate
+     * @return 
+     */
+    public ArrayList<String> getStats(int idSensor, String beginDate, String endDate){
+        
+        String dbFile ="capteur_"+idSensor+".db";
+        String tableName ="consumption_capteur_"+idSensor;
+        ArrayList<String> stats;
+        stats = new ArrayList<String>();
+         
+        String requete  = "SELECT current_power FROM "
+                + tableName+" WHERE date >= '"+beginDate+"' AND date <= '"+endDate+"'";
+        
+        try (Connection conn = this.connect(dbFile);
+            Statement stmt  = conn.createStatement();
+            ResultSet rs  = stmt.executeQuery(requete);){
+            
+            while(rs.next()){
+                stats.add(String.valueOf(rs.getInt("current_power")));
+            }      
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
+        return stats;
     }
     
     abstract public void createNewTable(String dbName);

@@ -2,14 +2,11 @@
 
 import com.miage.device.ElectricMeter;
 import com.miage.device.ElectricalPlug;
-import com.miage.device.LightBulb;
 import com.miage.device.SimulateDevice;
-import com.miage.device.TemperatureDevice;
 import com.miage.sensors.ElectricMeterSensor;
 import com.miage.sensors.ElectricalPlugSensor;
-import com.miage.sensors.LightBulbSensor;
 import com.miage.sensors.Sensor;
-import com.miage.sensors.TemperatureSensor;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /*
@@ -20,18 +17,18 @@ import java.util.Scanner;
 
 /**
  *
- * @author User
+ * @author ko
  */
 public class TestThreads {
     public static void main(String[] args) throws InterruptedException{
         
         //Préparation des Threads
-        /*
+        
         ElectricMeter device1 = new ElectricMeter();
         Sensor sensor1 = new ElectricMeterSensor("compteur", device1);
         Thread t1 = new Thread(new SimulateDevice(device1));
         Thread t1record = new Thread((Runnable) sensor1);
-        */
+        
         
         ElectricalPlug device2 = new ElectricalPlug();
         Sensor sensor2 = new ElectricalPlugSensor("prise salon", device2);
@@ -50,7 +47,8 @@ public class TestThreads {
         */
         
         //Lancement des Threads
-        
+        t1.start();
+        t1record.start();
         
         t2.start();
         t2record.start();
@@ -93,6 +91,21 @@ public class TestThreads {
             }
             if(i==2){              
                     sensor2.switchPower();
+            }
+            if(i==3){              
+                    ArrayList<String> stats = sensor2.getStats("2016-09-29 07:00:00", "2016-12-29 21:52:00");
+                    System.out.println("CAPTEUR 1 ");
+                    
+                    for(int j=0; j<stats.size(); j++){
+                        System.out.println("Enregistrement " + j + " : " + stats.get(j));
+                    }
+                    
+                    System.out.println("**********************************************");
+                    System.out.println("CAPTEUR 2");
+                    ArrayList<String> stats2 = sensor1.getStats("2016-09-29 07:00:00", "2016-12-29 21:52:00");
+                    for(int j=0; j<stats2.size(); j++){                   
+                        System.out.println("Enregistrement " + j + " : " + stats2.get(j));
+                    }
             }
           
           

@@ -76,6 +76,12 @@ public class Controller {
         
     }
     
+    public List<String> getStats(int id, String beginDate, String endDate) throws JsonProcessingException, Exception {
+        Sensor s = getSensor(id);
+        List<String> stats = s.getStats(beginDate, endDate);
+        return stats;
+    }
+    
     public String switchPower(int id) throws Exception
     {
         Sensor s = getSensor(id);
@@ -218,5 +224,7 @@ public class Controller {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(o);
     }
+
+    
     
 }

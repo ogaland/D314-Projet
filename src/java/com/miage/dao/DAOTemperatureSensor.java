@@ -54,6 +54,8 @@ public class DAOTemperatureSensor extends DAOManager {
         }
     }
     
+    
+    
     // Ne sert plus à rien normalement : à vérifier
     @Override
     public String[] getLastRecord(int idSensor) {
@@ -65,8 +67,8 @@ public class DAOTemperatureSensor extends DAOManager {
         String requete  = "SELECT MAX(id_reg), date, state, temperature, current_power FROM "+ tableName;
         
         try (Connection conn = this.connect(dbFile);
-             Statement stmt  = conn.createStatement();
-                ResultSet rs  = stmt.executeQuery(requete);){
+            Statement stmt  = conn.createStatement();
+            ResultSet rs  = stmt.executeQuery(requete);){
             
             while(rs.next()){
                 for(int i = 0; i<lastRecord.length ; i++){

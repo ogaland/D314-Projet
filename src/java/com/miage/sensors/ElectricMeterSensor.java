@@ -59,7 +59,8 @@ public class ElectricMeterSensor extends Sensor implements Runnable
     {
         DAOElectricMeterSensor DAOSensor = new DAOElectricMeterSensor();
         int consumption = this.getDevice().getCurrentConsumption();
-        DAOSensor.insert(this.getId(), consumption);     
+        DAOSensor.insert(this.getId(), consumption);
+        System.out.println("okrecord2");
     }
     
     /**
@@ -81,8 +82,11 @@ public class ElectricMeterSensor extends Sensor implements Runnable
     @Override
     public synchronized String[]  getInformations()
     {
-        DAOElectricMeterSensor DAOSensor = new DAOElectricMeterSensor();                 
-        return DAOSensor.getLastRecord(this.getId());
+        String[] thisSensor = new String[3];
+        thisSensor[0] = Integer.toString(this.getId());
+        thisSensor[1] = ""; // Valeur de la date vide sinon il faut modifier la partie client ou le json ?
+        thisSensor[2] = Integer.toString(this.getDevice().getCurrentConsumption());
+        return thisSensor;
     }
 
     

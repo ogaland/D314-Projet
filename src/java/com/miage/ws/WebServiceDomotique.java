@@ -67,6 +67,23 @@ public class WebServiceDomotique {
         }
     }
     
+    @WebMethod(operationName = "getStats")
+    public String getStats(@WebParam(name = "id") int id, @WebParam(name = "beginDate") String beginDate, @WebParam(name = "endDate") String endDate) {
+        Map<String,Object> out = new HashMap();
+        
+        try {
+            out.put("json", wsd.getStats(id,beginDate,endDate));
+            out.put("code", 0);
+            out.put("message", "");
+        }catch (Exception e) {
+            out.put("json", "");
+            out.put("code", -1);
+            out.put("message", e.getMessage());
+        }finally{
+            return getJsonFromObject(out);
+        }
+    }
+    
     @WebMethod(operationName = "switchPower")
     public String switchPower(@WebParam(name = "id") int id) {
         Map<String,Object> out = new HashMap();
