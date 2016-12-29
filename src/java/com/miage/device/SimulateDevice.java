@@ -29,17 +29,13 @@ public class SimulateDevice implements Runnable {
     @Override
     public void run() {
         Random r = new Random();
-        while(device.getState()=="on"){          
+        while(this.getDevice().getState()=="on"){
+            device.setCurrentConsumption(1 + r.nextInt(1000 - 1));
             try {
-                device.setCurrentConsumption(1 + r.nextInt(1000 - 1));
                 sleep(5000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(SimulateDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        if(device.getState()=="off"){
-            System.out.println("Device stopped");
-        }
-    }
-    
+    } 
 }

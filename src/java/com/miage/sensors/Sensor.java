@@ -78,7 +78,11 @@ public abstract class Sensor
     }
     
     //Méthodes abstraites implémentées dans les classes filles
-    
+
+    /**
+     *
+     */
+  
     public abstract void switchPower();
     
     /**
@@ -86,7 +90,7 @@ public abstract class Sensor
      */
    public abstract void recordBehavior();
     /**
-     * Crée une base de donnée du capteur.
+     * Crée une base de donnée du capteur quand le capteur n'existe pas.
      * Implémentée dans les classes filles.
      */
     public abstract void createDB();
@@ -95,7 +99,7 @@ public abstract class Sensor
      * Retourne les informations enregistrées par le capteur.
      * @return String
      */
-    public abstract String[] getInformations();  
+    public abstract String[] getInformations();
     
     public abstract void run();
     

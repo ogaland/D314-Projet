@@ -6,6 +6,7 @@
 package com.miage.sensors;
 
 import com.miage.dao.DAOTemperatureSensor;
+import com.miage.device.SimulateDevice;
 import com.miage.device.TemperatureDevice;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,9 +72,14 @@ public class TemperatureSensor extends Sensor implements Runnable
 
     @Override
     public String [] getInformations() 
-    {
-        DAOTemperatureSensor DAOSensor = new DAOTemperatureSensor();                 
-        return DAOSensor.getLastRecord(this.getId());
+    {   
+        String[] thisSensor = new String[5];
+        thisSensor[0] = Integer.toString(this.getId());
+        thisSensor[1] = ""; // Valeur de la date vide sinon il faut modifier la partie client ou le json ?
+        thisSensor[2] = this.getDevice().getState();
+        thisSensor[3] = Integer.toString(this.getDevice().getTemperature());
+        thisSensor[4] = Integer.toString(this.getDevice().getCurrentConsumption());
+        return thisSensor;
     }
 
     @Override
@@ -83,13 +89,15 @@ public class TemperatureSensor extends Sensor implements Runnable
         {
             System.out.print("Temperature Device switching ");
             this.temperatureDevice.setState("off");
-            System.out.println("OFF");
+            this.getDevice().setCurrentConsumption(0);
         }
         else
         {
             System.out.print("Temperature Device switching ");
             this.temperatureDevice.setState("on");
-            System.out.println("ON");
+            Thread t = new Thread(new SimulateDevice(this.getDevice()));
+            t.start();
+            this.recordBehavior();
         } 
     }
     
@@ -122,4 +130,5 @@ public class TemperatureSensor extends Sensor implements Runnable
             }
         }
     }
+
 }

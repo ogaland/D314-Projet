@@ -103,8 +103,8 @@ public class ElectricMeterSensor extends Sensor implements Runnable
 
     @Override
     public void switchPower() 
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    {//Non implémentée car on ne coupe pas le compteur électrique
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override

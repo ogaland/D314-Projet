@@ -53,7 +53,8 @@ public class DAOTemperatureSensor extends DAOManager {
             System.out.println(e.getMessage());
         }
     }
-
+    
+    // Ne sert plus à rien normalement : à vérifier
     @Override
     public String[] getLastRecord(int idSensor) {
        String[] lastRecord = new String[5];

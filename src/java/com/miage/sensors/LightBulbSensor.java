@@ -7,6 +7,7 @@ package com.miage.sensors;
 
 import com.miage.dao.DAOLightBulbSensor;
 import com.miage.device.LightBulb;
+import com.miage.device.SimulateDevice;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -79,8 +80,14 @@ public class LightBulbSensor extends Sensor implements Runnable
     @Override
     public String[] getInformations() 
     {
-        DAOLightBulbSensor DAOSensor = new DAOLightBulbSensor();                 
-        return DAOSensor.getLastRecord(this.getId());
+        String[] thisSensor = new String[6];
+        thisSensor[0] = Integer.toString(this.getId());
+        thisSensor[1] = ""; // Valeur de la date vide sinon il faut modifier la partie client ou le json ?
+        thisSensor[2] = this.getDevice().getState();
+        thisSensor[3] = this.getDevice().getColor();
+        thisSensor[4] = Integer.toString(this.getDevice().getBrightness());
+        thisSensor[5] = Integer.toString(this.getDevice().getCurrentConsumption());
+        return thisSensor;
     }
 
     /**
@@ -92,10 +99,14 @@ public class LightBulbSensor extends Sensor implements Runnable
         if(this.lightBulb.getState().equals("on"))
         {
             this.lightBulb.setState("off");
+            this.getDevice().setCurrentConsumption(0);
         }
         else
         {
             this.lightBulb.setState("on");
+            Thread t = new Thread(new SimulateDevice(this.getDevice()));
+            t.start();
+            this.recordBehavior();
         }      
     }
     
@@ -133,5 +144,5 @@ public class LightBulbSensor extends Sensor implements Runnable
             }
         }
     }
-    
+
 }

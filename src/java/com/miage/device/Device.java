@@ -1,7 +1,5 @@
 package com.miage.device;
 
-import java.util.Random;
-
 /**
  *
  * @author ko
@@ -29,8 +27,8 @@ public class Device {
         return this.state;
     }
     
-    public void setState(String state){
-        this.state = state;
+    public synchronized void setState(String state){      
+            this.state = state;    
     }
     
     /**
@@ -61,8 +59,9 @@ public class Device {
      * Met à jour la consommation courante de l'appareil.
      * @param currentConsumption 
      */
-    public void setCurrentConsumption(int currentConsumption){
-        this.currentConsumption = currentConsumption;  
+    public void  setCurrentConsumption(int currentConsumption){
+        this.currentConsumption = currentConsumption;
+        
     }
     
 }

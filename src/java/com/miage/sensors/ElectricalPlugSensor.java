@@ -7,6 +7,7 @@ package com.miage.sensors;
 
 import com.miage.dao.DAOElectricalPlugSensor;
 import com.miage.device.ElectricalPlug;
+import com.miage.device.SimulateDevice;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,6 +30,7 @@ public class ElectricalPlugSensor extends Sensor implements Runnable
         this.electricalPlug = device;
         createDB();       
     }
+    
     
     //getters and setters
     /**
@@ -54,7 +56,7 @@ public class ElectricalPlugSensor extends Sensor implements Runnable
      * Enregistre le comportement de l'appareil (device) : prise
      */
     @Override
-    public void recordBehavior() 
+    public synchronized void recordBehavior() 
     {    
         DAOElectricalPlugSensor DAOSensor = new DAOElectricalPlugSensor();
         int consumption = this.getDevice().getCurrentConsumption();
@@ -67,12 +69,13 @@ public class ElectricalPlugSensor extends Sensor implements Runnable
      */
     @Override
     public final void createDB() 
-    {
+    {   
         DAOElectricalPlugSensor DAOSensor = new DAOElectricalPlugSensor();
         DAOSensor.createNewDatabase("capteur_"+this.getId()+".db");
         DAOSensor.createNewTable("capteur_"+this.getId());
     }
     
+  
     /**
      * Renvoie l'information courante du capteur qui est le dernier
      * enregistrement de la table du capteur
@@ -80,9 +83,13 @@ public class ElectricalPlugSensor extends Sensor implements Runnable
      */
     @Override
     public String[] getInformations() 
-    {
-        DAOElectricalPlugSensor DAOSensor = new DAOElectricalPlugSensor();                 
-        return DAOSensor.getLastRecord(this.getId());
+    {   
+        String[] thisSensor = new String[4];
+        thisSensor[0] = Integer.toString(this.getId());
+        thisSensor[1] = ""; // Valeur de la date vide sinon il faut modifier la partie client ou le json ?
+        thisSensor[2] = this.getDevice().getState();
+        thisSensor[3] = Integer.toString(this.getDevice().getCurrentConsumption());
+        return thisSensor;
     }
     
     /**
@@ -91,16 +98,24 @@ public class ElectricalPlugSensor extends Sensor implements Runnable
     @Override
     public void switchPower() 
     {
-        if(this.electricalPlug.getState().equals("on"))
-        {
-            this.electricalPlug.setState("off");
+       
+        if(this.getDevice().getState().equals("on"))
+        { 
+            this.getDevice().setState("off");
+            this.getDevice().setCurrentConsumption(0);
         }
-        else
-        {
-            this.electricalPlug.setState("on");
-        }      
+        else if(this.getDevice().getState().equals("off"))
+        {   
+            this.getDevice().setState("on");
+            /*Quand on rallume un capteur il faut relancer un Thread 
+            pour la simulation et pour l'enregistrement en BD*/
+            Thread t1record = new Thread(this);
+            Thread t2Simulate = new Thread(new SimulateDevice(this.getDevice()));
+            t2Simulate.start();
+            t1record.start();                     
+        }
     }
-    
+
      /**
      * Retourne les informations du capteur.
      * @return String
@@ -119,21 +134,22 @@ public class ElectricalPlugSensor extends Sensor implements Runnable
 
     @Override
     public void run() 
-    {
-        while(this.getDevice().getState().equals("on"))
-        {
+    {    
+        while(this.getDevice().getState()=="on"){
+            System.out.println("okRecord");
             recordBehavior();
+            
             try 
-            {
+            {   
                 Thread.sleep(Sensor.SLEEP_TIME);
             } 
             catch (InterruptedException ex) 
             {
                 Logger.getLogger(ElectricMeterSensor.class.getName()).log(Level.SEVERE, null, ex);
+                break;
             }
-        }
+        }                
     }
-    
-    
-    
+           
 }
+   
