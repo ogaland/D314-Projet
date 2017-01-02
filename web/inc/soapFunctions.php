@@ -1,14 +1,14 @@
 <?php
 ## Fichier contenant les fonctions WSDL du WebService
 
-# Dï¿½sactivation du stockage du fichier WSDL en cache
+# Désactivation du stockage du fichier WSDL en cache
 ini_set("soap.wsdl_cache_enabled", 0);
 
-# Instanciation du client SOAP ï¿½ partir du fichier WSDL 
-# Bien vï¿½rifier que la ligne extension=php_soap.dll du fichier php.ini de votre serveur web soit dï¿½commentï¿½e
+# Instanciation du client SOAP à partir du fichier WSDL 
+# Bien vérifier que la ligne extension=php_soap.dll du fichier php.ini de votre serveur web soit décommentée
 $soapClient = new SoapClient("http://localhost:8080/D314-Projet/WebService?wsdl", array('compression'=> SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP));
 
-# Rï¿½cupï¿½ration de la liste des capteurs
+# Récupération de la liste des capteurs
 function getListSensors()
 {
 	global $soapClient;
@@ -16,7 +16,7 @@ function getListSensors()
 	return json_decode($result->{'return'});
 }
 
-# Rï¿½cupï¿½ration des informations du capteur(id)
+# Récupération des informations du capteur(id)
 function getInfoSensor($pId)
 {
 	global $soapClient;
@@ -24,7 +24,7 @@ function getInfoSensor($pId)
 	return json_decode($result->{'return'});
 }
 
-# Change l'ï¿½tat du capteur(id) On/Off
+# Change l'état du capteur(id) On/Off
 function switchPower($pId)
 {
 	global $soapClient;
@@ -48,7 +48,7 @@ function changeColor($pId, $pColor)
 	return json_decode($result->{'return'});
 }
 
-# Changement de la tempï¿½rature du thermostat(id)
+# Changement de la température du thermostat(id)
 function changeTemperature($pId, $pTemperature)
 {
 	global $soapClient;
@@ -56,7 +56,7 @@ function changeTemperature($pId, $pTemperature)
 	return json_decode($result->{'return'});
 }
 
-# Changement de la luminositï¿½ du capteur(id)
+# Changement de la luminosité du capteur(id)
 function changeLuminosity($pId, $pLuminosity)
 {
 	global $soapClient;

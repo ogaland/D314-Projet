@@ -29,10 +29,29 @@
 				xmlhttp.open("GET", "inc/ajax.inc.php?query=" + query + "&id=" + pId, true);
 				xmlhttp.send();
 			}
+			
+			function realTimeValues(pTime)
+			{
+				var nInterval = setInterval(updateValues, pTime);
+			}
 
 			function updateValues()
 			{
-				
+				var query = "updateValues";
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200)
+					{
+						var obj = JSON.parse(this.responseText);
+						
+						for (i = 0; i < obj.nbSensor; i++)
+						{
+							document.getElementById("sensor-value-" + (i+1)).innerHTML = obj.sensors[i].Value;
+						}
+					}
+				};
+				xmlhttp.open("GET", "inc/ajax.inc.php?query=" + query, true);
+				xmlhttp.send();
 			}
 
 			function changeColor(pId, pColor)
@@ -106,7 +125,7 @@
 			}
 		</script>
     </head>
-    <body>
+    <body onpageshow="realTimeValues(1000)">
 
 	<?php 
 		include('inc/soapFunctions.php'); 
@@ -121,7 +140,6 @@
 			{
 				$sensor = $list->{'json'}[$i];
 				$sensorTypeIconURL;
-				$realTimeValue;
 				$sensorStateURL = "img/on.icon.png";
 				$color;
 				$luminosity;
@@ -131,21 +149,17 @@
 				{
 					case "Prise":
 						$sensorTypeIconURL="img/socket.png";
-						$realTimeValue = $sensor->{'Info'}[3] . " W";
 						break;
 					case "Compteur":
 						$sensorTypeIconURL="img/flash.png";
-						$realTimeValue = $sensor->{'Info'}[2] . " W";
 						break;
 					case "Ampoule":
 						$sensorTypeIconURL="img/light.png";
-						$realTimeValue = $sensor->{'Info'}[5] . " W";
 						$color = $sensor->{'Info'}[3];
 						$luminosity = $sensor->{'Info'}[4];
 						break;
 					case "Temperature":
 						$sensorTypeIconURL="img/thermostat.png";
-						$realTimeValue = $sensor->{'Info'}[4] . " W";
 						$temperature = $sensor->{'Info'}[3];
 						break;
 					default:
@@ -156,7 +170,7 @@
 				
 				if ($sensor->{'Info'}[2] == "off")
 				{ 
-					$sensorStateURL = "img/off.icon.jpg";
+					$sensorStateURL = "img/off.icon.png";
 				}
 				
 				echo '<div id="' . $sensor->{"Id"} . '" class="sensor">';
@@ -164,18 +178,14 @@
 				
 				echo	'<div class="sensor-picture-type"><img src="' . $sensorTypeIconURL . '" alt="sensor-type"></div>';
 				echo 	'<div class="middle-frame">';
-				echo		'<div class="sensor-name"><form><input type="text" id="sensor-name-' . $sensor->{"Id"} . '" name="sensor-name-' . $sensor->{"Id"} . '" onfocusout="changeName(' . $sensor->{"Id"} . ', this.value)" value="' . $sensor->{"Name"} . '" size=17 max-length=20></form></div>';
+				echo		'<div class="sensor-name"><form><input type="text" id="sensor-name-' . $sensor->{"Id"} . '" name="sensor-name-' . $sensor->{"Id"} . '" onchange="changeName(' . $sensor->{"Id"} . ', this.value)" value="' . $sensor->{"Name"} . '" size=17 max-length=20></form></div>';
 				echo		'<div class="sensor-state"><img id="sensor-state-' . $sensor->{"Id"} . '" src="' . $sensorStateURL . '" alt="sensor-state" onclick="changeState(' . $sensor->{"Id"} . ')"></div>';
 				echo	'</div>';
-				#echo	'<img class="edit-name-icon" src="" alt="edit-name" style="width:20px;height:20px;">';
 				echo 	'<div class="bottom-frame">';
-				echo		'<div class="sensor-value">Consommation (temps réel) : ' . $realTimeValue . '</div>';
+				echo		'<div class="sensor-value">Consommation (temps réel) : <span id="sensor-value-' . $sensor->{"Id"} . '"></span></div>';
 				
 				if ($sensor->{"Type"} == "Ampoule")
-				{
-					#echo	'<div class="sensor-color">Couleur : ' . $color . '</div>';
-					#echo	'<div class="sensor-luminosity">Luminosité : ' . $luminosity . '</div>';
-					
+				{					
 					echo	'<div class="other-properties">';
 					echo		'<form>';
 					echo			'<label class="label-color" for="color">Couleur : </label>';
@@ -197,9 +207,7 @@
 					
 				}
 				else if ($sensor->{"Type"} == "Temperature")
-				{
-					#echo	'<div class="sensor-temperature">Température : ' . $temperature . '</div>';
-					
+				{					
 					echo	'<div class="other-properties">';
 					echo		'<form>';
 					echo			'<label class="label-temperature" for="temperature">Température (°C) : </label>';

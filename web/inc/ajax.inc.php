@@ -21,7 +21,53 @@ if($query != "")
 				print_r(changeName($_GET["id"], $_GET["name"])->{"code"});
 			}
 			break;
-		case "UpdateValues":
+		case "updateValues":		
+			$list = getListSensors();
+			
+			$return = '{"nbSensor":"' . count($list->{'json'}) . '"';
+				
+			if ($list->{'code'} == 0 && count($list->{'json'}) > 0)
+			{
+				$return .= ', "sensors":[';
+				for ($i = 0; $i < count($list->{'json'}); $i++)
+				{
+					$sensor = $list->{'json'}[$i];
+					
+					$return .= '{"Id":"' . $sensor->{'Id'} . '", "Value":"';
+					
+					switch ($sensor->{"Type"})
+					{
+						case "Prise":
+							$return .= $sensor->{'Info'}[3] . ' W"';
+							break;
+						case "Compteur":
+							$return .= $sensor->{'Info'}[2] . ' W"';
+							break;
+						case "Ampoule":
+							$return .= $sensor->{'Info'}[5] . ' W"';
+							break;
+						case "Temperature":
+							$return .= $sensor->{'Info'}[4] . ' W"';
+							break;
+						default:
+							break;
+					}
+					
+					if ($i+1 == count($list->{'json'}))
+					{
+						$return .= '}';
+					}
+					else
+					{
+						$return .= '},';
+					}
+					
+				}
+				$return .= ']';
+			}
+			
+			$return .= '}';
+			print_r($return);
 			break;
 		case "changeColor":
 			if ($_GET["id"] != "" && $_GET["color"] != "")
@@ -40,7 +86,6 @@ if($query != "")
 			{
 				print_r(changeTemperature($_GET["id"], $_GET["temperature"])->{"code"});
 			}
-			break;
 			break;
 		default:
 			break;

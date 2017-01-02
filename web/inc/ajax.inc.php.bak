@@ -1,0 +1,33 @@
+<?php
+## Fichier contenant les fonctions AJAX
+
+include('soapFunctions.php'); 
+
+$query = $_GET["query"];
+
+if($query != "")
+{
+	switch ($query)
+	{
+		case "ChangeState":
+			if ($_GET["id"] != "")
+			{
+				echo switchPower($_GET["id"])->{"code"};
+			}
+			break;
+		case "ChangeName":
+			break;
+		case "updateValues":
+			break;
+		case "ChangeColor":
+			break;
+		case "changeLuminosity":
+			break;
+		case "changeTemperature":
+			break;
+		default:
+			break;
+	}
+}
+
+?>
