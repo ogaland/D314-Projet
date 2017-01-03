@@ -3,13 +3,15 @@ package com.miage.sensors;
 import com.miage.dao.DAOManager;
 import com.miage.device.Device;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
  * Classe abstraite capteur
  * @author ko
  */
-public abstract class Sensor 
+public abstract class Sensor implements Runnable
 {
     
      //Attributs
@@ -85,14 +87,25 @@ public abstract class Sensor
             public void createNewTable(String dbName) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-
-            @Override
-            public String[] getLastRecord(int idSensor) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
         };
         ArrayList<String> stats = DAOSensor.getStats(this.getId(),beginDate, endDate);
         return stats;
+    }
+    
+    @Override
+    public void run() {
+        while(this.getDevice().getState().equals("on"))
+        {
+            recordBehavior();
+            try 
+            {
+                Thread.sleep(Sensor.SLEEP_TIME);
+            } 
+            catch (InterruptedException ex) 
+            {
+                Logger.getLogger(Sensor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     /**
@@ -117,7 +130,9 @@ public abstract class Sensor
      */
     public abstract String[] getInformations();
     
-    public abstract void run();
+ 
     
     public abstract Device getDevice();
+
+    
 }

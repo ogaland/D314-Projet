@@ -52,31 +52,4 @@ public class DAOElectricalPlugSensor extends DAOManager{
         }
     }
     
-    // Ne sert plus à rien normalement : à vérifier
-    @Override
-    public String[] getLastRecord(int idSensor) {
-        String[] lastRecord = new String[4];
-        
-        String dbFile ="capteur_"+idSensor+".db";
-        String tableName ="consumption_capteur_"+idSensor;
-
-        String requete  = "SELECT MAX(id_reg), date, state, current_power FROM "+ tableName;
-        
-        try{
-                Connection conn = this.connect(dbFile);
-                Statement stmt  = conn.createStatement();
-                ResultSet rs  = stmt.executeQuery(requete);
-        
-            
-            while(rs.next()){
-                for(int i = 0; i<lastRecord.length ; i++){
-                    lastRecord[i] = rs.getObject(i+1).toString();
-                }
-            }      
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return lastRecord;
-    }
-    
 }

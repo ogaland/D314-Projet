@@ -8,15 +8,13 @@ package com.miage.sensors;
 import com.miage.dao.DAOTemperatureSensor;
 import com.miage.device.SimulateDevice;
 import com.miage.device.TemperatureDevice;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
  * Capteur de température
  * @author ko
  */
-public class TemperatureSensor extends Sensor implements Runnable
+public class TemperatureSensor extends Sensor
 {
     TemperatureDevice temperatureDevice;
     
@@ -112,23 +110,6 @@ public class TemperatureSensor extends Sensor implements Runnable
                 + "\n - Temperature : " + this.getDevice().getTemperature()
                 + "\n - consommation : " + this.getDevice().getCurrentConsumption()  +" kW";     
         return s;
-    }
-
-    @Override
-    public void run() 
-    {
-        while(this.getDevice().getState().equals("on"))
-        {
-            recordBehavior();
-            try 
-            {
-                Thread.sleep(Sensor.SLEEP_TIME);
-            } 
-            catch (InterruptedException ex) 
-            {
-                Logger.getLogger(ElectricMeterSensor.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
 
 }

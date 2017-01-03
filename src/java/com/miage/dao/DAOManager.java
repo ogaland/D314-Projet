@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -83,8 +82,6 @@ public abstract class DAOManager {
     }
     
     abstract public void createNewTable(String dbName);
-    
-    abstract public String[] getLastRecord(int idSensor);
 
     
 }

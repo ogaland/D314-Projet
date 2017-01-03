@@ -8,14 +8,12 @@ package com.miage.sensors;
 import com.miage.dao.DAOElectricalPlugSensor;
 import com.miage.device.ElectricalPlug;
 import com.miage.device.SimulateDevice;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Capteur de prise électrique
  * @author ko
  */
-public class ElectricalPlugSensor extends Sensor implements Runnable
+public class ElectricalPlugSensor extends Sensor
 {
     private ElectricalPlug electricalPlug;
     
@@ -131,25 +129,4 @@ public class ElectricalPlugSensor extends Sensor implements Runnable
                 + "\n - consommation : " + this.getDevice().getCurrentConsumption()  +" kW";     
         return s;
     }
-
-    @Override
-    public void run() 
-    {    
-        while(this.getDevice().getState()=="on"){
-            System.out.println("okRecord");
-            recordBehavior();
-            
-            try 
-            {   
-                Thread.sleep(Sensor.SLEEP_TIME);
-            } 
-            catch (InterruptedException ex) 
-            {
-                Logger.getLogger(ElectricMeterSensor.class.getName()).log(Level.SEVERE, null, ex);
-                break;
-            }
-        }                
-    }
-           
-}
-   
+}                   

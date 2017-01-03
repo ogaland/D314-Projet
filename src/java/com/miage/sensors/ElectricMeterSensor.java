@@ -7,15 +7,13 @@ package com.miage.sensors;
 
 import com.miage.dao.DAOElectricMeterSensor;
 import com.miage.device.ElectricMeter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
  * Capteur de compteur electrique
  * @author ko
  */
-public class ElectricMeterSensor extends Sensor implements Runnable
+public class ElectricMeterSensor extends Sensor
 {
     private ElectricMeter electricMeter;
     
@@ -60,7 +58,6 @@ public class ElectricMeterSensor extends Sensor implements Runnable
         DAOElectricMeterSensor DAOSensor = new DAOElectricMeterSensor();
         int consumption = this.getDevice().getCurrentConsumption();
         DAOSensor.insert(this.getId(), consumption);
-        System.out.println("okrecord2");
     }
     
     /**
@@ -109,24 +106,5 @@ public class ElectricMeterSensor extends Sensor implements Runnable
     public void switchPower() 
     {//Non implémentée car on ne coupe pas le compteur électrique
         throw new UnsupportedOperationException("Not supported yet."); 
-    }
-
-    @Override
-    public void run() 
-    {
-        while(this.getDevice().getState().equals("on"))
-        {
-            recordBehavior();
-            try 
-            {
-                Thread.sleep(Sensor.SLEEP_TIME);
-            } 
-            catch (InterruptedException ex)
-            {
-                Logger.getLogger(ElectricMeterSensor.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
-    
+    }   
 }

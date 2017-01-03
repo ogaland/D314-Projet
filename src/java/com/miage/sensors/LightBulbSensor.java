@@ -8,15 +8,13 @@ package com.miage.sensors;
 import com.miage.dao.DAOLightBulbSensor;
 import com.miage.device.LightBulb;
 import com.miage.device.SimulateDevice;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
  * Capteur d'ampoule
  * @author ko
  */
-public class LightBulbSensor extends Sensor implements Runnable
+public class LightBulbSensor extends Sensor
 {
     private LightBulb lightBulb;
     
@@ -127,22 +125,4 @@ public class LightBulbSensor extends Sensor implements Runnable
                 + "\n - consommation : " + this.getDevice().getCurrentConsumption()  +" kW";     
         return s;
     }
-
-    @Override
-    public void run() 
-    {
-       while(this.getDevice().getState().equals("on"))
-       {
-            recordBehavior();
-            try 
-            {
-                Thread.sleep(Sensor.SLEEP_TIME);
-            } 
-            catch (InterruptedException ex) 
-            {
-                Logger.getLogger(ElectricMeterSensor.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
 }
