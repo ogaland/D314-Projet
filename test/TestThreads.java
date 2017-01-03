@@ -1,7 +1,5 @@
 
-
-import com.miage.device.ElectricMeter;
-import com.miage.device.ElectricalPlug;
+import com.miage.device.Device;
 import com.miage.device.SimulateDevice;
 import com.miage.sensors.ElectricMeterSensor;
 import com.miage.sensors.ElectricalPlugSensor;
@@ -24,13 +22,13 @@ public class TestThreads {
         
         //Préparation des Threads
         
-        ElectricMeter device1 = new ElectricMeter();
+        Device device1 = new Device();
         Sensor sensor1 = new ElectricMeterSensor("compteur", device1);
         Thread t1 = new Thread(new SimulateDevice(device1));
         Thread t1record = new Thread((Runnable) sensor1);
         
         
-        ElectricalPlug device2 = new ElectricalPlug();
+        Device device2 = new Device();
         Sensor sensor2 = new ElectricalPlugSensor("prise salon", device2);
         Thread t2 = new Thread(new SimulateDevice(device2));
         Thread t2record = new Thread((Runnable) sensor2);

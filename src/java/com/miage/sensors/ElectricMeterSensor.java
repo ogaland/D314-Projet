@@ -6,7 +6,7 @@
 package com.miage.sensors;
 
 import com.miage.dao.DAOElectricMeterSensor;
-import com.miage.device.ElectricMeter;
+import com.miage.device.Device;
 
 
 /**
@@ -15,14 +15,14 @@ import com.miage.device.ElectricMeter;
  */
 public class ElectricMeterSensor extends Sensor
 {
-    private ElectricMeter electricMeter;
+    private Device electricMeter;
     
     /**
      * Constructeur
      * @param name
      * @param device 
      */
-    public ElectricMeterSensor(String name, ElectricMeter device) 
+    public ElectricMeterSensor(String name, Device device) 
     {
         super(name, "Compteur");
         this.electricMeter = device;
@@ -34,7 +34,7 @@ public class ElectricMeterSensor extends Sensor
      * Met à jour la prise électrique du capteur
      * @param device 
      */
-    public void setDevice(ElectricMeter device)
+    public void setDevice(Device device)
     {
         this.electricMeter = device;
     }
@@ -44,7 +44,7 @@ public class ElectricMeterSensor extends Sensor
      * @return ElectricMeter 
      */
     @Override
-    public ElectricMeter getDevice()
+    public Device getDevice()
     {
         return this.electricMeter;
     }

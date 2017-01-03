@@ -9,8 +9,6 @@ package com.miage.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.miage.device.Device;
-import com.miage.device.ElectricMeter;
-import com.miage.device.ElectricalPlug;
 import com.miage.device.LightBulb;
 import com.miage.device.SimulateDevice;
 import com.miage.device.TemperatureDevice;
@@ -153,12 +151,12 @@ public class Controller {
             switch(type)
             {
                 case "Prise" :
-                    device = new ElectricalPlug();
-                    sensors.add(currentNbSensor, new ElectricalPlugSensor(nom, (ElectricalPlug)device));
+                    device = new Device();
+                    sensors.add(currentNbSensor, new ElectricalPlugSensor(nom, device));
                     break;
                 case "Compteur":
-                    device = new ElectricMeter();
-                    sensors.add(currentNbSensor, new ElectricMeterSensor(nom, (ElectricMeter)device));
+                    device = new Device();
+                    sensors.add(currentNbSensor, new ElectricMeterSensor(nom, device));
                     break;
                 case "Ampoule":
                     device = new LightBulb();
@@ -218,13 +216,6 @@ public class Controller {
         }
         throw new Exception("Impossible de trouver le sensor");
     }
-    
-    private String getJsonFromObject(Object o) throws JsonProcessingException
-    {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(o);
-    }
-
     
     
 }

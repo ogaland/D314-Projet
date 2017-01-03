@@ -6,7 +6,7 @@
 package com.miage.sensors;
 
 import com.miage.dao.DAOElectricalPlugSensor;
-import com.miage.device.ElectricalPlug;
+import com.miage.device.Device;
 import com.miage.device.SimulateDevice;
 
 /**
@@ -15,14 +15,14 @@ import com.miage.device.SimulateDevice;
  */
 public class ElectricalPlugSensor extends Sensor
 {
-    private ElectricalPlug electricalPlug;
+    private Device electricalPlug;
     
     /**
      * Constructeur
-     * @param name
-     * @param device 
+     * @param names
+     * @param device  
      */
-    public ElectricalPlugSensor(String name, ElectricalPlug device)
+    public ElectricalPlugSensor(String name, Device device)
     {
         super(name,"Prise");
         this.electricalPlug = device;
@@ -35,7 +35,7 @@ public class ElectricalPlugSensor extends Sensor
      * Met à jour la prise électrique du capteur
      * @param device 
      */
-    public void setDevice(ElectricalPlug device)
+    public void setDevice(Device device)
     {
         this.electricalPlug = device;
     }
@@ -45,7 +45,7 @@ public class ElectricalPlugSensor extends Sensor
      * @return ElectricalPlug 
      */
     @Override
-    public ElectricalPlug getDevice()
+    public Device getDevice()
     {
         return this.electricalPlug;
     }

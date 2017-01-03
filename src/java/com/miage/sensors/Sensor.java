@@ -131,7 +131,10 @@ public abstract class Sensor implements Runnable
     public abstract String[] getInformations();
     
  
-    
+    /**
+     * Retourne l'appareil associé au capteur
+     * @return Device 
+     */
     public abstract Device getDevice();
 
     
