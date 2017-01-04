@@ -7,7 +7,6 @@
 	
 		function displayStats(pId) 
 		{
-			var dataPointsA = [];
 			var query = "getStats";
 			
 			var chart = new CanvasJS.Chart("chartContainer",
