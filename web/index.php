@@ -123,9 +123,15 @@
 				xmlhttp.open("GET", "inc/ajax.inc.php?query=" + query + "&id=" + pId + "&temperature=" + pTemperature, true);
 				xmlhttp.send();
 			}
+			
+			function openStats(pId)
+			{
+				window.open("graph.php?id="+pId,'popUpGraph','width=600, height=600');
+				return false;
+			}
 		</script>
     </head>
-    <body onpageshow="realTimeValues(1000)">
+    <body onpageshow="realTimeValues(5000)">
 
 	<?php 
 		include('inc/soapFunctions.php'); 
@@ -216,7 +222,7 @@
 					echo	'</div>';
 				}
 				
-				echo		'<div class="statistical"><img src="img/bars-chart.png" alt="statistical-icon"></div>';
+				echo		'<div class="statistical"><img id="statistics-' . $sensor->{"Id"} . '" src="img/bars-chart.png" alt="statistical-icon" onclick="openStats(' . $sensor->{"Id"} . ')"></div>';
 				echo	'</div>';		
 				echo '</div>';
 			}

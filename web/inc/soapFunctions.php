@@ -64,6 +64,14 @@ function changeLuminosity($pId, $pLuminosity)
 	return json_decode($result->{'return'});
 }
 
+# Chargement des statistiques de la dernière semaine (id)
+function getStats($pId)
+{
+	global $soapClient;
+	$result = $soapClient->getStats(array("id"=>$pId, "beginDate"=>date("Y-m-d H:i:s", mktime(0, 0, 0, date("m")  , date("d")-7, date("Y"))), "endDate"=>date("Y-m-d H:i:s")));
+	return json_decode($result->{'return'});
+}
+
 # Ajouter un capteur
 function addSensor($pType, $pName)
 {

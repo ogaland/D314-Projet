@@ -87,6 +87,37 @@ if($query != "")
 				print_r(changeTemperature($_GET["id"], $_GET["temperature"])->{"code"});
 			}
 			break;
+		case "getStats":
+			if ($_GET["id"] != "")
+			{
+				$list = getStats($_GET["id"]);
+				
+				$return = '{"nbValues":"' . count($list->{'json'}) . '"';
+				
+				if ($list->{'code'} == 0 && count($list->{'json'}) > 0)
+				{
+					$return .= ', "values":[';
+					
+					for ($i = 0; $i < count($list->{'json'}); $i++)
+					{						
+						$return .= '"' . $list->{'json'}[$i] . '"';
+												
+						if ($i+1 == count($list->{'json'}))
+						{
+							$return .= '';
+						}
+						else
+						{
+							$return .= ',';
+						}
+						
+					}
+					$return .= ']';
+				}
+			}
+			$return .= '}';
+			print_r($return);
+			break;
 		default:
 			break;
 	}
