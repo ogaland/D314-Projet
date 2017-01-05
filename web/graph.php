@@ -4,7 +4,6 @@
 	<script src="js/canvasjs.min.js"></script>
 	<script type="text/javascript">
 		
-	
 		function displayStats(pId) 
 		{
 			var query = "getStats";
@@ -29,23 +28,33 @@
 							  dataPoints: []
 							}
 						]
-				});
-				
-			
-			
+				});			
 					
 			var xmlhttp = new XMLHttpRequest();
 			xmlhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200)
 				{
 					var response = JSON.parse(this.responseText);
+					var min = parseInt(response.values[0]);
+					var moy = 0;
+					var max = parseInt(response.values[0]);
 
 					for (var i = 0; i < 100; i++) 
 					{
 						y = parseInt(response.values[i]);
+						moy += y;
 						
-						dateTime = new Date(new Date().setDate(new Date().getDate()-7));
+						if (y < min)
+						{
+							min = y;
+						}
 						
+						if (y > max)
+						{
+							max = y;
+						}					
+						var dateTime = new Date();
+						dateTime.setDate(dateTime.getHours()-7*24);
 						dateTime.setSeconds(dateTime.getSeconds()+i*5);
 						
 						chart.options.data[0].dataPoints.push({
@@ -54,7 +63,11 @@
 						});
 						
 						chart.render();
-					}			
+					}
+					moy = moy/100;
+					document.getElementById("minValue").innerHTML = min;
+					document.getElementById("moyValue").innerHTML = moy;
+					document.getElementById("maxValue").innerHTML = max;
 				}						
 			};
 			xmlhttp.open("GET", "inc/ajax.inc.php?query=" + query + "&id=" + pId, true);
@@ -70,7 +83,7 @@
 <body onpageshow="displayStats(<?php if($_GET['id'] != '') { echo $_GET['id']; } ?>)">
 	<div id="chartContainer" style="height: 400px; width: 100%;">
 	</div>
-        min = 10W, moyenne = 50W, max = 100W
+        <div><p>Min : <span id="minValue"></span> W</p><p>Moy : <span id="moyValue"></span> W</p><p>Max : <span id="maxValue"></span> W</p></div>
 </body>
 
 </html>
